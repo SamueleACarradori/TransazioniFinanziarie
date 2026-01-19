@@ -7,6 +7,9 @@
 #include <ctime>
 #include <string>
 
+/*
+ * Class representing a Date using std library
+ */
 
 class Date {
 public:
