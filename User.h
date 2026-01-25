@@ -11,7 +11,7 @@
 
 class User : public IFileConfig {
 public:
-    explicit User(std::string  id);
+    explicit User(std::string   id);
 
     User(std::string  id,std::string  username, std::vector<CheckingAccount>& accounts);
 
