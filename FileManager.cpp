@@ -4,20 +4,29 @@
 
 #include "FileManager.h"
 
-FileManager::FileManager(std::string fileName) {
+#include <fstream>
+#include <utility>
+
+
+
+FileManager::FileManager(std::string  fileName) : fileName(std::move(fileName)) {
     //TODO
+    filePath = "";
 }
 
-FileManager::FileManager(std::string filePath, std::string fileName) {
+FileManager::FileManager(std::string filePath, std::string fileName) : filePath(std::move(filePath)), fileName(std::move(fileName)) {
 }
 
-bool FileManager::fileExists(std::string fileName) {
+bool FileManager::fileExists(const std::string& fileName) {
+    std::ifstream file(fileName);
+    return file.is_open();
 }
 
-bool FileManager::deleteFile(std::string fileName) {
+bool FileManager::fileExists() const{
+    return fileExists(fileName);
 }
 
-bool FileManager::createFile(std::string fileName) {
+bool FileManager::deleteFile() const{
 }
 
 std::string FileManager::getLine() {

@@ -14,16 +14,20 @@
 
 class FileManager {
 public:
-    explicit FileManager(std::string fileName);
-    FileManager(std::string filePath,std::string fileName);
+    explicit FileManager(std::string  fileName);
+    FileManager(std::string filePath, std::string fileName);
 
-    bool fileExists(std::string fileName);
-    bool deleteFile(std::string fileName);
-    bool createFile(std::string fileName);
-    std::string getLine();
-    std::string getLine(int line);
+    static bool fileExists(const std::string& fileName);
+    bool fileExists() const;
+    bool deleteFile() const;
+    bool save();
+    bool load();
 
 protected:
+    std::ostream openFile();
+
+
+private:
     std::string filePath;
     std::string fileName;
 };

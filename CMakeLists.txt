@@ -12,7 +12,5 @@ add_executable(TransazioniFinanziarie main.cpp
         Transaction.h
         FileManager.cpp
         FileManager.h
-        TransactionsDatabase.cpp
-        TransactionsDatabase.h
         Date.cpp
         Date.h)
