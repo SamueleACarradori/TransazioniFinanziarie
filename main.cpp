@@ -2,7 +2,6 @@
 #include <iostream>
 
 int main() {
-        //  create and ofstream object and open the file in
         //  append mode
         std::ofstream fio("abc.txt", std::ios::app);
 

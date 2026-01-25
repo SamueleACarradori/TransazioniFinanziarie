@@ -13,4 +13,5 @@ add_executable(TransazioniFinanziarie main.cpp
         FileManager.cpp
         FileManager.h
         Date.cpp
-        Date.h)
+        Date.h
+        IFileConfig.h)

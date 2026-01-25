@@ -6,6 +6,8 @@
 #define TRANSAZIONIFINANZIARIE_FILEMANAGER_H
 #include <string>
 
+#include "IFileConfig.h"
+
 /**
  * General purpose class for handling of '.txt' files.
  * 'filePath' contains the path of the folder we want to save the file.
@@ -14,17 +16,20 @@
 
 class FileManager {
 public:
-    explicit FileManager(std::string  fileName);
     FileManager(std::string filePath, std::string fileName);
 
     static bool fileExists(const std::string& fileName);
+
     bool fileExists() const;
+
     bool deleteFile() const;
-    bool save();
-    bool load();
+
+    bool save(IFileConfig* file) const;
+
+    bool load(IFileConfig* file) const;
 
 protected:
-    std::ostream openFile();
+    static bool endsWith(const std::string& str, const std::string& suffix);
 
 
 private:

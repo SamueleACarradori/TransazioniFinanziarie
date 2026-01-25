@@ -11,18 +11,26 @@ class Transaction {
 public:
     Transaction(const std::string &id_sender_account, const std::string &id_receiver_account,
         const std::string &id_transaction, float amount);
+
     Transaction(const std::string &id_sender_account, const std::string &id_receiver_account,
         const std::string &id_transaction, const std::string &comment, float amount);
 
+
     //getters
     std::string getIdSenderAccount();
+
     std::string getIdReceiverAccount();
+
     std::string getIdTransaction();
+
     std::string getComment();
+
     float getAmount();
+
 
     //setters
     void setComment(const std::string &comment);
+
     void setAmount(float amount);
 
 private:
