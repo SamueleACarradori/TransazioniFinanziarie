@@ -33,6 +33,33 @@ bool FileManager::deleteFile() const{
     return false;
 }
 
+bool FileManager::save(const IFileConfig& obj) const {
+    //open file in append
+    std::ofstream file(fileName, std::ios::out | std::ios::app);
+
+    if (!file.is_open()) {
+        file << obj.toString() << std::endl;
+        file.close();
+        return true;
+    }
+    return false;
+}
+
+bool FileManager::load(const IFileConfig& obj) const {
+    std::ifstream file(fileName, std::ios::in);
+    bool isLoaded = false;
+
+    if (!file.is_open()) {
+        std::string line;
+        while (getline(file,line) && !isLoaded) {
+            isLoaded = obj.loadFromFile(line);
+        }
+        file.close();
+    }
+
+    return isLoaded;
+}
+
 bool FileManager::endsWith(const std::string &str, const std::string &suffix) {
     if (suffix.size() > str.size())
         return false;

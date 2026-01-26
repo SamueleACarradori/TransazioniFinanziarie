@@ -38,7 +38,7 @@ public:
     //Override methods
     std::string toString() const override;
 
-    void loadFromFile(const std::string &line) override;
+    bool loadFromFile(const std::string &line) const override;
 
     ~User() override = default;
 

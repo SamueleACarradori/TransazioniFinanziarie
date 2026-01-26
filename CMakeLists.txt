@@ -3,6 +3,8 @@ project(TransazioniFinanziarie)
 
 set(CMAKE_CXX_STANDARD 14)
 
+add_subdirectory(test)
+
 add_executable(TransazioniFinanziarie main.cpp
         User.cpp
         User.h
@@ -14,4 +16,5 @@ add_executable(TransazioniFinanziarie main.cpp
         FileManager.h
         Date.cpp
         Date.h
-        IFileConfig.h)
+        IFileConfig.h
+        test/runAllTests.cpp)

@@ -24,9 +24,9 @@ public:
 
     bool deleteFile() const;
 
-    bool save(IFileConfig* file) const;
+    bool save(const IFileConfig& obj) const;
 
-    bool load(IFileConfig* file) const;
+    bool load(const IFileConfig& obj) const;
 
 protected:
     static bool endsWith(const std::string& str, const std::string& suffix);

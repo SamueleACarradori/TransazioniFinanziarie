@@ -13,7 +13,8 @@ std::string User::toString() const {
     return "";
 }
 
-void User::loadFromFile(const std::string &line) {
+bool User::loadFromFile(const std::string &line) const{
+    return false;
 }
 
 
