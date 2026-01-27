@@ -15,7 +15,7 @@ public:
     // Core methods
     virtual std::string toString() const = 0;
 
-    virtual bool loadFromFile(const std::string& line) const = 0;
+    virtual bool loadFromFile(const std::string& line) = 0;
 
 };
 #endif //TRANSAZIONIFINANZIARIE_IFILECONFIG_H

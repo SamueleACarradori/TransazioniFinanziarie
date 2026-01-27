@@ -11,7 +11,7 @@
 
 class User : public IFileConfig {
 public:
-    explicit User(std::string   id);
+    explicit User(std::string id);
 
     User(std::string  id,std::string  username, std::vector<CheckingAccount>& accounts);
 
@@ -38,12 +38,13 @@ public:
     //Override methods
     std::string toString() const override;
 
-    bool loadFromFile(const std::string &line) const override;
+    bool loadFromFile(const std::string &line) override;
 
     ~User() override = default;
 
 
 private:
+
     std::string id;
     std::string username;
     std::vector<CheckingAccount> accounts;

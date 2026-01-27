@@ -26,7 +26,7 @@ public:
 
     bool save(const IFileConfig& obj) const;
 
-    bool load(const IFileConfig& obj) const;
+    bool load(IFileConfig& obj) const;
 
 protected:
     static bool endsWith(const std::string& str, const std::string& suffix);

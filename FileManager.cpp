@@ -50,7 +50,7 @@ bool FileManager::save(const IFileConfig& obj) const {
     return false;
 }
 
-bool FileManager::load(const IFileConfig& obj) const {
+bool FileManager::load(IFileConfig& obj) const {
     std::ifstream file(fileName, std::ios::in);
     bool isLoaded = false;
 
