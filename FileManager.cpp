@@ -50,14 +50,14 @@ bool FileManager::save(const IFileConfig& obj) const {
     return false;
 }
 
-bool FileManager::load(IFileConfig& obj) const {
+bool FileManager::load(IFileConfig& obj,const std::string& identifier) const {
     std::ifstream file(fileName, std::ios::in);
     bool isLoaded = false;
 
     if (!file.is_open()) {
         std::string line;
         while (getline(file,line) && !isLoaded) {
-            isLoaded = obj.loadFromFile(line);
+            isLoaded = obj.loadFromFile(line, identifier);
         }
         file.close();
     }

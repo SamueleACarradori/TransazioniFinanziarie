@@ -6,25 +6,30 @@
 #define TRANSAZIONIFINANZIARIE_USER_H
 #include <vector>
 #include "CheckingAccount.h"
+#include "FileManager.h"
 #include "IFileConfig.h"
 
-
+/**
+ * This class is designed to be initialized by file or by constructor in full.
+ * Once initialized it cannot be modified due to security reasons.
+ *
+ */
 class User : public IFileConfig {
 public:
-    explicit User(std::string id);
+    User() = default;
 
-    User(std::string  id,std::string  username, std::vector<CheckingAccount>& accounts);
+    User(std::string id,std::string username, const std::vector<CheckingAccount>& accounts);
 
 
     //getters
-    CheckingAccount getAccount(std::string idAccount);
+    CheckingAccount getAccount(const std::string& idAccount);
 
 
     //setters
-    void setUsername(std::string username);
 
+    void addAccount(const CheckingAccount& account);
 
-    bool addAccount(CheckingAccount account);
+    void addAccount(const FileManager& accountManager, const std::string& idAccount);
 
     bool deleteAccount(CheckingAccount account);
 
@@ -35,10 +40,11 @@ public:
     bool send(std::string idSender,std::string idReceiver);
 
 
-    //Override methods
+    // Standard output for saving on .txt file
     std::string toString() const override;
 
-    bool loadFromFile(const std::string &line) override;
+    // Identifier is used as id of the user, so it searches only for the user id
+    bool loadFromFile(const std::string &line, const std::string &identifier) override;
 
     ~User() override = default;
 

@@ -8,13 +8,52 @@
 #include <sstream>
 #include <utility>
 
-User::User(std::string  id) : id(std::move(id)){}
+
+User::User(std::string  id, std::string  username, const std::vector<CheckingAccount> &accounts) :
+    id(std::move(id)),
+    username(std::move(username)),
+    accounts(accounts){}
+
+CheckingAccount User::getAccount(const std::string& idAccount) {
+    //vector index
+    short i = 0;
+
+    //putting a bool variable to make it more readable
+    bool found = false;
+
+    //find the index inside the vector
+    while (!found && i < accounts.size()) {
+        if (accounts[i].getAccountId() == idAccount)
+            found = true;
+        else
+            i++;
+    }
+
+    if (!found) {
+        //TODO throw exception
+    }
+
+    return accounts[i];
+}
+
+void User::addAccount(const CheckingAccount& account) {
+    accounts.push_back(account);
+}
+
+void User::addAccount(const FileManager& accountManager,const std::string &idAccount) {
+    auto account = CheckingAccount();
+    if (!accountManager.load(account,idAccount)) {
+        //TODO throw exception
+    }
+    accounts.push_back(account);
+}
+
 
 std::string User::toString() const {
     return id+";"+username+";";
 }
 
-bool User::loadFromFile(const std::string &line){
+bool User::loadFromFile(const std::string &line,const std::string &identifier){
     //Uses id for identify the user
     std::stringstream ss(line);
     std::string split;
@@ -27,8 +66,11 @@ bool User::loadFromFile(const std::string &line){
      *there is no need to cicle it first
      *see toString() implemented method */
     getline(ss, split, del);
-    if (split == id)
+    if (split == identifier) {
+        //using split or identifier is the same
+        id = split;
         found = true;
+    }
 
     //only if found we proceed to cicle and load the obj
     short i = 0;
