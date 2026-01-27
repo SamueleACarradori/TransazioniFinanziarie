@@ -6,7 +6,6 @@
 #define TRANSAZIONIFINANZIARIE_USER_H
 #include <vector>
 #include "CheckingAccount.h"
-#include "FileManager.h"
 #include "IFileConfig.h"
 
 /**
@@ -16,22 +15,33 @@
  */
 class User : public IFileConfig {
 public:
-    User() = default;
+    //Constructor by string
+    User(const std::string &line, const std::string &idUser);
 
-    User(std::string id,std::string username, const std::vector<CheckingAccount>& accounts);
+    // Constructor by file
+    User(const FileManager &userManager, const std::string &idUser);
+
+    // Constructor by value
+    User(std::string id, std::string username, const std::vector<CheckingAccount> &accounts);
+
+    // Copy Constructor
+    User(const User &user);
 
 
-    //getters
+    // getters
     CheckingAccount getAccount(const std::string& idAccount);
 
 
-    //setters
+    // setters
 
     void addAccount(const CheckingAccount& account);
 
+    // add account searching in the filesystem
     void addAccount(const FileManager& accountManager, const std::string& idAccount);
 
-    bool deleteAccount(CheckingAccount account);
+    bool deleteAccount(const std::string& idAccount);
+
+    bool deleteAccount(const CheckingAccount& account);
 
     bool withdraw(std::string idAccount);
 
@@ -44,10 +54,20 @@ public:
     std::string toString() const override;
 
     // Identifier is used as id of the user, so it searches only for the user id
-    bool loadFromFile(const std::string &line, const std::string &identifier) override;
+    bool loadFromString(const std::string &line, const std::string &identifier) override;
 
     ~User() override = default;
 
+protected:
+    // Constructor only used to initialize obj inside
+    // the other constructors and hidden for user use.
+    User() = default;
+
+    // Method created for complying with the 'request' for some constructors for a deep copy
+    void init(const User& user);
+
+    // Return the index of the correspondent Account
+    short findAccountIndexById(const std::string& idAccount) const;
 
 private:
 

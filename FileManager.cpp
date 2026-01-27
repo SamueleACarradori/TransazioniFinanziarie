@@ -57,7 +57,7 @@ bool FileManager::load(IFileConfig& obj,const std::string& identifier) const {
     if (!file.is_open()) {
         std::string line;
         while (getline(file,line) && !isLoaded) {
-            isLoaded = obj.loadFromFile(line, identifier);
+            isLoaded = obj.loadFromString(line, identifier);
         }
         file.close();
     }

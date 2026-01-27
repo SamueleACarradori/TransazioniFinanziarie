@@ -6,6 +6,7 @@
 #define TRANSAZIONIFINANZIARIE_CHECKINGACCOUNT_H
 #include <string>
 
+#include "FileManager.h"
 #include "IFileConfig.h"
 
 /**
@@ -18,8 +19,13 @@
 
 class CheckingAccount : public IFileConfig{
 public:
-    CheckingAccount() = default;
+    //Constructor by string
+    CheckingAccount(const std::string &line, const std::string &idAccount);
 
+    // Construct by file
+    CheckingAccount(const FileManager &checkingManager, const std::string &idAccount);
+
+    //Construct by values
     CheckingAccount(float balance,std::string id,std::string idUser);
 
 
@@ -31,7 +37,7 @@ public:
     void setIdUser(std::string idUser);
 
     //getters
-    std::string getAccountId();
+    std::string getAccountId() const;
 
     float getBalance();
 
@@ -40,7 +46,7 @@ public:
     std::string toString() const override;
 
     // Identifier is used as id of the account, so it searches only for the account id
-    bool loadFromFile(const std::string &line, const std::string &identifier) override;
+    bool loadFromString(const std::string &line, const std::string &identifier) override;
 
     ~CheckingAccount() override = default;
 
