@@ -16,7 +16,7 @@
 
 class FileManager {
 public:
-    FileManager(std::string filePath, std::string fileName);
+    explicit FileManager(std::string fileName);
 
     static bool fileExists(const std::string& fileName);
 
@@ -33,7 +33,6 @@ protected:
 
 
 private:
-    std::string filePath;
     std::string fileName;
 };
 

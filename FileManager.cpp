@@ -10,8 +10,13 @@
 
 
 
-FileManager::FileManager(std::string filePath, std::string fileName) : filePath(std::move(filePath)), fileName(std::move(fileName)) {
-    //TODO controls
+FileManager::FileManager( std::string fileName) : fileName(std::move(fileName)) {
+    if (!endsWith(this->fileName, ".txt")) {
+        //TODO throw exception
+    }
+    if(!fileExists()) {
+        //TODO create file
+    }
 }
 
 bool FileManager::fileExists(const std::string& fileName) {
@@ -25,7 +30,7 @@ bool FileManager::fileExists() const{
 
 bool FileManager::deleteFile() const{
     // Returns 0 on success, non-zero on error
-    const int result = std::remove((filePath+fileName).c_str());
+    const int result = std::remove(fileName.c_str());
 
     if (result == 0) {
         return true;
