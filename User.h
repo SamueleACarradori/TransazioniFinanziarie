@@ -42,14 +42,14 @@ public:
 
     bool changeAccountBalance(const std::string& idAccount, float amount);
 
-    //bool send(const std::string& idAccountSender,const std::string& idReceiver, const std::string& idAccountReceiver, float amount);
-
 
     // Standard output for saving on .txt file
     std::string toString() const override;
 
-    // Identifier is used as id of the user, so it searches only for the user id
+    // Identifier can be anything but the accounts since they are saved in a file on their own
     bool loadFromString(const std::string &line, const std::string &identifier) override;
+
+    //void loadFromString(const std::string &line) override;
 
     ~User() override = default;
 
@@ -64,8 +64,8 @@ protected:
     // Return the index of the correspondent Account
     short findAccountIndexById(const std::string& idAccount) const;
 
-    // Just an overkill method for solving a basic random string gen problem
-    static std::string generateRandomString(int length = 8, bool specialChar = false);
+    //we don't user of this class to abuse this method so is downgraded to protected
+    void loadFromString(const std::string &line) override;
 
 private:
 

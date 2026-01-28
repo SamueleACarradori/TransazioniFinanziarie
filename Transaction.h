@@ -9,13 +9,11 @@
 
 class Transaction {
 public:
-    Transaction(const std::string &line);
-    Transaction(User , const std::string &id_receiver_account,
-        const std::string &id_transaction, float amount);
+
+    explicit Transaction(const std::string &line);
 
     Transaction(const std::string &id_sender_account, const std::string &id_receiver_account,
         const std::string &id_transaction, float amount, const std::string &comment = "");
-
 
     //getters
     std::string getIdSenderAccount();
@@ -33,6 +31,9 @@ public:
     void setComment(const std::string &comment);
 
     void setAmount(float amount);
+
+//protected:
+
 
 private:
     std::string idSenderAccount;

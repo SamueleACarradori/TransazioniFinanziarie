@@ -21,7 +21,7 @@ User::User(std::string username, std::string  id, const std::vector<CheckingAcco
     username(std::move(username)),
     accounts(accounts) {
     if (id.empty()) {
-        this->id = User::generateRandomString();
+        this->id = IFileConfig::generateRandomString();
     }
 }
 
@@ -80,34 +80,32 @@ std::string User::toString() const {
 }
 
 bool User::loadFromString(const std::string &line,const std::string &identifier){
+    if (line.find(identifier) != std::string::npos) {
+        User::loadFromString(line);
+        return true;
+    }
+    return false;
+}
+
+void User::loadFromString(const std::string &line) {
     //Uses id for identify the user
     std::stringstream ss(line);
     std::string split;
-    bool found = false;
 
-    // Delimiter
-    constexpr char del = ';';
-
-    /*id should be in the first position of the string
-     *there is no need to cicle it first
-     *see toString() implemented method */
-    if (getline(ss, split, del) && split == identifier) {
-        //using split or identifier is the same
-        id = split;
-        found = true;
-    }
+    // Delimiter conform to toString() method
+    constexpr char delimiter = ';';
 
     //only if found we proceed to cicle and load the obj
     short i = 0;
-    while (getline(ss, split, del) && found) {
-       switch (i) {
-           case 0: username = split; break;
-               //space to add more
-       }
+    while (getline(ss, split, delimiter)) {
+        switch (i) {
+            case 0: id = split; break;
+            case 1: username = split; break;
+                //space to add more
+            default: ;//TODO throw exception
+        }
         i++;
     }
-    //TODO load CheckingAccount
-    return found;
 }
 
 void User::init(const IFileConfig* obj) {
@@ -139,38 +137,3 @@ short User::findAccountIndexById(const std::string &idAccount) const {
     }
     return i;
 }
-
-std::string User::generateRandomString(const int length, const bool specialChar) {
-    std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    if (specialChar)
-        characters = characters + "!@#$%^&*-+";
-
-    // Generating true random using entropy on the system. Could be slow and expensive so we made it static
-    static std::random_device random_device;
-
-    /*
-     * Mersenne Twister pseudo-random number generator, 19937 = period length (2¹⁹⁹³⁷ - 1)
-     * We seed it with a true random number to get a more pure-random-like result
-     */
-    std::mt19937 generator(random_device());
-
-    // Produces random integers uniformly distributed across a range
-    std::uniform_int_distribution<> distribution(0, characters.size() - 1);
-
-    // Generating the actual string
-    std::string random_string;
-    random_string.reserve(length); //optimization pre allocating
-
-    /**
-     * distribution(generator) generates a random index (int type)
-     * Then we select from the characters the one with the correspondent index
-     * and we put it inside result string
-    */
-    for (size_t i = 0; i < length; ++i) {
-        random_string += characters[distribution(generator)];
-    }
-
-    return random_string;
-}
-
-

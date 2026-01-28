@@ -15,28 +15,27 @@
  * For the purposes of this exercise, we will not do such thing,
  * although we acknowledge that in a more complete application
  * it should be the practice to be implemented.
+ *
+ * Also, this class is not designed for co-signed accounts :)
  */
 
 class CheckingAccount : public IFileConfig{
 public:
     //Constructor by string
-    CheckingAccount(const std::string &line, const std::string &idAccount);
+    CheckingAccount(const std::string &line, const std::string &identifier);
 
-    //Construct by values
-    CheckingAccount(float balance,std::string id,std::string idUser);
+    //Construct by values, balance < 0 is ok since exists accounts in debt or 'in red'
+    CheckingAccount(float balance,std::string  id,std::string  idUser);
 
+    void changeBalance(float change);
 
-    void changeBalance(float add);
-
-    void subtractBalance(float subtract);
-
-    //setters
-    void setIdUser(std::string idUser);
+    // I don't know what kind of control I could do here since there is no password nor autentication system
+    void transferAccountProperty(const std::string& newUser);
 
     //getters
     std::string getAccountId() const;
 
-    float getBalance();
+    float getBalance() const;
 
 
     // Standard output for saving on .txt file
@@ -45,7 +44,11 @@ public:
     // Identifier is used as id of the account, so it searches only for the account id
     bool loadFromString(const std::string &line, const std::string &identifier) override;
 
+
     ~CheckingAccount() override = default;
+protected:
+
+    void loadFromString(const std::string &line) override;
 
 private:
     float balance = 0;
