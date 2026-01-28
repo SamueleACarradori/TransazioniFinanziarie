@@ -20,7 +20,7 @@ public:
     User(const std::string &line, const std::string &idUser);
 
     // Constructor by value
-    User(std::string id, std::string username, const std::vector<CheckingAccount> &accounts);
+    explicit User(std::string username, std::string id = "",const std::vector<CheckingAccount> &accounts = {});
 
     // Copy Constructor
     User(const User &user);
@@ -31,7 +31,6 @@ public:
 
 
     // setters
-
     void addAccount(const CheckingAccount& account);
 
     // add account searching in the filesystem
@@ -64,6 +63,9 @@ protected:
 
     // Return the index of the correspondent Account
     short findAccountIndexById(const std::string& idAccount) const;
+
+    // Just an overkill method for solving a basic random string gen problem
+    static std::string generateRandomString(int length = 8, bool specialChar = false);
 
 private:
 

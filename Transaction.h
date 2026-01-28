@@ -9,11 +9,12 @@
 
 class Transaction {
 public:
-    Transaction(const std::string &id_sender_account, const std::string &id_receiver_account,
+    Transaction(const std::string &line);
+    Transaction(User , const std::string &id_receiver_account,
         const std::string &id_transaction, float amount);
 
     Transaction(const std::string &id_sender_account, const std::string &id_receiver_account,
-        const std::string &id_transaction, const std::string &comment, float amount);
+        const std::string &id_transaction, float amount, const std::string &comment = "");
 
 
     //getters
