@@ -22,14 +22,11 @@ public:
     //Constructor by string
     CheckingAccount(const std::string &line, const std::string &idAccount);
 
-    // Construct by file
-    CheckingAccount(const FileManager &checkingManager, const std::string &idAccount);
-
     //Construct by values
     CheckingAccount(float balance,std::string id,std::string idUser);
 
 
-    void addBalance(float add);
+    void changeBalance(float add);
 
     void subtractBalance(float subtract);
 

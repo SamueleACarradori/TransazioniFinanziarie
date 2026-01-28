@@ -4,7 +4,6 @@
 
 #include "User.h"
 
-#include <iostream>
 #include <sstream>
 #include <utility>
 
@@ -16,23 +15,13 @@ User::User(const std::string &line, const std::string &idUser){
     //TODO throw exception
 }
 
-User::User(const FileManager &userManager, const std::string &idUser) {
-    auto user = User();
-    if (!userManager.load(user,idUser)) {
-        //TODO throw exception
-    }
-
-    // call copy constructor init for deep copy
-    this->init(user);
-}
-
 User::User(std::string  id,std::string  username, const std::vector<CheckingAccount> &accounts) :
     id(std::move(id)),
     username(std::move(username)),
     accounts(accounts) {}
 
 User::User(const User &user) {
-    this->init(user);
+    User::init(&user);
 }
 
 CheckingAccount User::getAccount(const std::string& idAccount) {
@@ -45,19 +34,39 @@ void User::addAccount(const CheckingAccount& account) {
     accounts.push_back(account);
 }
 
-void User::addAccount(const FileManager& accountManager,const std::string &idAccount) {
-    auto account = CheckingAccount(accountManager,idAccount);
-    if (!accountManager.load(account,idAccount)) {
-        //TODO throw exception
+void User::addAccount(const std::string& line, const std::string &idAccount) {
+    // purposefully letting the exception propagate since at this stage
+    // it means that the function was called with improper values
+    auto account = CheckingAccount(line,idAccount);
+    User::addAccount(account);
+}
+
+bool User::deleteAccount(const std::string &idAccount) {
+    bool deleted = true;
+    try {
+        const short i = User::findAccountIndexById(idAccount);
+        accounts.erase(accounts.begin()+i);
+        //TODO verify if this is correct
+    }catch (std::exception &e) {
+        deleted = false;
     }
-    accounts.push_back(account);
+    return deleted;
 }
 
 bool User::deleteAccount(const CheckingAccount& account) {
-    bool deleted = false;
-    this->getAccount(account.getAccountId());
+    return deleteAccount(account.getAccountId());
+}
 
-    return deleted;
+bool User::changeAccountBalance(const std::string& idAccount, const float amount) {
+    bool success = true;
+    //TODO catch multiple exceptions
+    try {
+        const short i = User::findAccountIndexById(idAccount);
+        accounts[i].changeBalance(amount);
+    }catch (std::exception &e) {
+        success = false;
+    }
+    return success;
 }
 
 
@@ -96,10 +105,13 @@ bool User::loadFromString(const std::string &line,const std::string &identifier)
     return found;
 }
 
-void User::init(const User &user) {
-    id = user.id;
-    username = user.username;
-    accounts = user.accounts;
+void User::init(const IFileConfig* obj) {
+    // dynamic cast the parent class to the child class
+    const auto user = dynamic_cast<const User*>(obj);
+
+    id = user->id;
+    username = user->username;
+    accounts = user->accounts;
 }
 
 short User::findAccountIndexById(const std::string &idAccount) const {

@@ -28,7 +28,10 @@ public:
 
     bool load(IFileConfig& obj, const std::string& identifier) const;
 
+    bool deleteLine(const std::string& identifier) const;
+
 protected:
+
     static bool endsWith(const std::string& str, const std::string& suffix);
 
 

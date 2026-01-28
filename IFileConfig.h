@@ -5,7 +5,7 @@
 #ifndef TRANSAZIONIFINANZIARIE_IFILECONFIG_H
 #define TRANSAZIONIFINANZIARIE_IFILECONFIG_H
 
-#include "FileManager.h"
+#include <memory>
 #include <string>
 
 /**
@@ -20,11 +20,11 @@ public:
     IFileConfig() = default;
 
     // Copy Constructor
-    IFileConfig(IFileConfig& obj) {
+    IFileConfig(const IFileConfig& obj) {
         // calling init() this way should automatically call
         // the function redefined inside the derived class
         // also if init() is not redefined throws an exception
-        init();
+        init(&obj);
     }
 
     // Provide destructor default implementation
@@ -38,8 +38,10 @@ public:
     virtual bool loadFromString(const std::string& line, const std::string& identifier) = 0;
 
 protected:
-    virtual void init() {
+    virtual void init(const IFileConfig* obj) {
         //TODO throw exception
     };
+
+    void findInLine();
 };
 #endif //TRANSAZIONIFINANZIARIE_IFILECONFIG_H

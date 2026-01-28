@@ -4,6 +4,7 @@
 
 #ifndef TRANSAZIONIFINANZIARIE_USER_H
 #define TRANSAZIONIFINANZIARIE_USER_H
+
 #include <vector>
 #include "CheckingAccount.h"
 #include "IFileConfig.h"
@@ -17,9 +18,6 @@ class User : public IFileConfig {
 public:
     //Constructor by string
     User(const std::string &line, const std::string &idUser);
-
-    // Constructor by file
-    User(const FileManager &userManager, const std::string &idUser);
 
     // Constructor by value
     User(std::string id, std::string username, const std::vector<CheckingAccount> &accounts);
@@ -37,17 +35,15 @@ public:
     void addAccount(const CheckingAccount& account);
 
     // add account searching in the filesystem
-    void addAccount(const FileManager& accountManager, const std::string& idAccount);
+    void addAccount(const std::string& line, const std::string &idAccount);
 
     bool deleteAccount(const std::string& idAccount);
 
     bool deleteAccount(const CheckingAccount& account);
 
-    bool withdraw(std::string idAccount);
+    bool changeAccountBalance(const std::string& idAccount, float amount);
 
-    bool deposit(std::string idAccount);
-
-    bool send(std::string idSender,std::string idReceiver);
+    //bool send(const std::string& idAccountSender,const std::string& idReceiver, const std::string& idAccountReceiver, float amount);
 
 
     // Standard output for saving on .txt file
@@ -64,7 +60,7 @@ protected:
     User() = default;
 
     // Method created for complying with the 'request' for some constructors for a deep copy
-    void init(const User& user);
+    void init(const IFileConfig* obj) override;
 
     // Return the index of the correspondent Account
     short findAccountIndexById(const std::string& idAccount) const;

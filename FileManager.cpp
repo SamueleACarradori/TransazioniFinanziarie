@@ -6,8 +6,9 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <utility>
-
+#include <vector>
 
 
 FileManager::FileManager( std::string fileName) : fileName(std::move(fileName)) {
@@ -63,6 +64,43 @@ bool FileManager::load(IFileConfig& obj,const std::string& identifier) const {
     }
 
     return isLoaded;
+}
+
+bool FileManager::deleteLine(const std::string &identifier) const {
+    std::ifstream inFile(fileName);
+    if (!inFile.is_open()) {
+        return false;
+    }
+
+    std::vector<std::string> lines;
+    std::string line;
+    bool found = false;
+
+    // Read all lines into memory
+    while (std::getline(inFile, line)) {
+        // if the identifier is not inside the line find() return npos
+        // we want to save all the non match lines
+        // when we find the line we want to delete we skip it and mark as found
+
+        if (line.find(identifier) == std::string::npos) {
+            lines.push_back(line);
+        }else {
+            found = true;
+        }
+    }
+    inFile.close();
+
+    // Write back all lines except the removed one
+    std::ofstream outFile(fileName);
+    if (outFile.is_open() && found) {
+        for (const auto& l : lines) {
+            outFile << l << std::endl;
+        }
+        outFile.close();
+        return true;
+    }
+
+    return false;
 }
 
 bool FileManager::endsWith(const std::string &str, const std::string &suffix) {
