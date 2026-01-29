@@ -47,6 +47,10 @@ public:
 
     ~CheckingAccount() override = default;
 
+protected:
+
+    void init(int index,const std::string& attribute) override;
+
 private:
     float balance = 0;
     std::string id;

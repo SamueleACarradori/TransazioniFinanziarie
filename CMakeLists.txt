@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 4.1)
 project(TransazioniFinanziarie)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(test)
 
-add_executable(TransazioniFinanziarie main.cpp
+add_executable(TransazioniFinanziarie
         User.cpp
         User.h
         CheckingAccount.cpp

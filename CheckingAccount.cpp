@@ -36,23 +36,15 @@ std::string CheckingAccount::toString() const {
 }
 
 void CheckingAccount::loadFromString(const std::string &line) {
-    //Uses id for identify the user
-    std::stringstream ss(line);
-    std::string split;
+    IFileConfig::loadFromString(line,';');
+}
 
-    // Delimiter conform to toString() method
-    constexpr char delimiter = ';';
-
-    //only if found we proceed to cicle and load the obj
-    short i = 0;
-    while (getline(ss, split, delimiter)) {
-        switch (i) {
-            case 0: id = split; break;
-            case 1: idUser = split; break;
-            case 3: balance = std::stof(split); break;
-                //space to add more
-            default: ;//TODO throw exception
-        }
-        i++;
+void CheckingAccount::init(int index, const std::string &attribute) {
+    switch (index) {
+        case 0: id = attribute; break;
+        case 1: idUser = attribute; break;
+        case 3: balance = std::stof(attribute); break;
+            //space to add more
+        default: ;//TODO throw exception
     }
 }

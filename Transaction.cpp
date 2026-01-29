@@ -16,21 +16,53 @@ Transaction::Transaction(const std::string &line) {
 Transaction::Transaction(std::string id_sender_account, std::string id_receiver_account,
     const float amount, std::string comment,std::string id_transaction) :
     idSenderAccount(std::move(id_sender_account)),idReceiverAccount(std::move(id_receiver_account)),
-    idTransaction(std::move(id_transaction)), comment(std::move(comment)), amount(amount){
+    idTransaction(std::move(id_transaction)), amount(amount){
     if (amount <= 0) {
         //TODO throw exception
     }
+    // Maximum characters allowed in a comment //TODO test if correct
+    this->comment.reserve(20);
+    this->comment = std::move(comment);
+
     if (idTransaction.empty()) {
         idTransaction = IFileConfig::generateRandomString(16);
     }
 }
 
-std::string Transaction::getIdSenderAccount() {
+std::string Transaction::getIdSenderAccount() const{
     return idSenderAccount;
 }
 
-std::string Transaction::getIdReceiverAccount() {
+std::string Transaction::getIdReceiverAccount() const{
     return idReceiverAccount;
+}
+
+std::string Transaction::getIdTransaction() const{
+    return idTransaction;
+}
+
+std::string Transaction::getComment() const{
+    return comment;
+}
+
+float Transaction::getAmount() const {
+    return amount;
+}
+
+void Transaction::setComment(const std::string &comment) {
+    this->comment = comment;
+}
+
+std::string Transaction::toString() const {
+    return idTransaction+";"+idSenderAccount+";"+idReceiverAccount+";"+std::to_string(amount)+";"+comment+";";
+}
+
+void Transaction::loadFromString(const std::string &line) {
+    IFileConfig::loadFromString(line,';');
+}
+
+
+void Transaction::init(int index, const std::string &attribute) {
 }
 
 

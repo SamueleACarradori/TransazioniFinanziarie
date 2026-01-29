@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <random>
+#include <sstream>
 #include <string>
 
 /**
@@ -47,16 +48,42 @@ public:
     // we want to load usually is the id
     //virtual bool loadFromString(const std::string& line, const std::string& identifier) = 0;
 
-    // Standardizing loading from file.txt
+    /* Standardizing loading from file.txt
+     * I thought of making this method not pure virtual, but I wanted every child class
+     * to redefine it so that is visible in the .cpp the kind of implementation each one
+     * of them has without having to run with runtime call backlog if something goes wrong.
+     */
     virtual void loadFromString(const std::string& line) = 0;
 
 protected:
+
+    /*This method is protected because the scope of this class is to create a framework
+     *to interface with a class that saves files on .txt
+     *so we do not want anyone but the class to define the delimiter
+     *this class has the purpose to solve the general problem of loading while
+     *the actual call is made from the public twin method */
+    virtual void loadFromString(const std::string& line, const char delimiter) {
+        std::stringstream ss(line);
+        std::string split;
+
+        short i = 0;
+        while (getline(ss, split, delimiter)) {
+            //uses the redefined method in each child class
+            init(i,split);
+            i++;
+        }
+    }
+
     //Init is defined here so that all subclasses have it for Copy Constructor
     //to fix the inheritance problem the IFileConfig method just throws an exception when called
     // ensuring that the right call at runtime is made //TODO test it
     virtual void init(const IFileConfig* obj) {
         //TODO throw exception
     };
+
+    //Initialize specific child object during loadFromString()
+    virtual void init(int index, const std::string& attribute) = 0;
+
 
     // Just an overkill method for solving a basic random string gen problem
     static std::string generateRandomString(const int length = 8, const bool specialChar = false) {

@@ -49,7 +49,7 @@ public:
     // Standard input method for loading .txt file
     void loadFromString(const std::string &line) override;
 
-    //void loadFromString(const std::string &line) override;
+    //void loadFromString(const std::string &line, const char delimiter) override;
 
     ~User() override = default;
 
@@ -60,6 +60,9 @@ protected:
 
     // Method created for complying with the 'request' for some constructors for a deep copy
     void init(const IFileConfig* obj) override;
+
+    //initialize object during string loading
+    void init(int index, const std::string& attribute) override;
 
     // Return the index of the correspondent Account
     short findAccountIndexById(const std::string& idAccount) const;

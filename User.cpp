@@ -11,9 +11,7 @@
 
 User::User(const std::string &line, const std::string &idUser){
     //Specifying user class to force the compiler on using the redefined function
-    if (!User::loadFromString(line, idUser)) {
-    }
-    //TODO throw exception
+    User::loadFromString(line);
 }
 
 User::User(std::string username, std::string  id, const std::vector<CheckingAccount> &accounts) :
@@ -42,7 +40,7 @@ void User::addAccount(const CheckingAccount& account) {
 void User::addAccount(const std::string& line, const std::string &idAccount) {
     // purposefully letting the exception propagate since at this stage
     // it means that the function was called with improper values
-    auto account = CheckingAccount(line,idAccount);
+    auto account = CheckingAccount(line);
     User::addAccount(account);
 }
 
@@ -80,24 +78,7 @@ std::string User::toString() const {
 }
 
 void User::loadFromString(const std::string &line) {
-    //Uses id for identify the user
-    std::stringstream ss(line);
-    std::string split;
-
-    // Delimiter conform to toString() method
-    constexpr char delimiter = ';';
-
-    //only if found we proceed to cicle and load the obj
-    short i = 0;
-    while (getline(ss, split, delimiter)) {
-        switch (i) {
-            case 0: id = split; break;
-            case 1: username = split; break;
-                //space to add more
-            default: ;//TODO throw exception
-        }
-        i++;
-    }
+    IFileConfig::loadFromString(line,';');
 }
 
 void User::init(const IFileConfig* obj) {
@@ -107,6 +88,15 @@ void User::init(const IFileConfig* obj) {
     id = user->id;
     username = user->username;
     accounts = user->accounts;
+}
+
+void User::init(const int index, const std::string& attribute) {
+    switch (index) {
+        case 0: id = attribute; break;
+        case 1: username = attribute; break;
+
+        default: ;//TODO throw exception
+    }
 }
 
 short User::findAccountIndexById(const std::string &idAccount) const {

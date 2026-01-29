@@ -19,23 +19,26 @@ public:
 
     //getters
 
-    std::string getIdSenderAccount();
+    std::string getIdSenderAccount() const;
 
-    std::string getIdReceiverAccount();
+    std::string getIdReceiverAccount() const;
 
-    std::string getIdTransaction();
+    std::string getIdTransaction() const;
 
-    std::string getComment();
+    std::string getComment() const;
 
-    float getAmount();
+    float getAmount() const;
 
 
     //setters
 
     void setComment(const std::string &comment);
 
-    void setAmount(float amount);
-
+    /* No setter for amount since the amount is supposed to be set
+     * once at constructor, and then no more.
+     * If users, what to change the amount they have to delete the transaction with the
+     * wrong amount and generate a new one with the correct amount
+    */
 
     // Override methods
 
@@ -43,9 +46,14 @@ public:
 
     void loadFromString(const std::string &line) override;
 
+protected:
+
+    void init(int index,const std::string& attribute) override;
+
 private:
     std::string idSenderAccount;
     std::string idReceiverAccount;
+    // standard length is 16 since there are far more transactions than anything else
     std::string idTransaction;
     std::string comment;
     float amount;
