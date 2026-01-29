@@ -16,7 +16,15 @@ FileManager::FileManager( std::string fileName) : fileName(std::move(fileName)) 
         //TODO throw exception
     }
     if(!fileExists()) {
-        //TODO create file
+        //using ofstream for output file operations.
+        std::ofstream file;
+        file.open(fileName);
+
+        // Check if the file was successfully created.
+        if (!file.is_open()){
+            //TODO throw exception
+        }
+        file.close();
     }
 }
 
@@ -53,24 +61,20 @@ bool FileManager::save(const IFileConfig& obj) const {
 
 bool FileManager::load(IFileConfig& obj,const std::string& identifier) const {
     std::ifstream file(fileName, std::ios::in);
-    bool exists = true;
+    bool isLoaded = false;
 
     if (!file.is_open()) {
         std::string line;
-        while (getline(file,line) && exists) {
+        while (getline(file,line) && !isLoaded) {
             if (line.find(identifier) != std::string::npos) {
-                try {
-                    obj.loadFromString(line);
-                }catch(std::exception& e) {
-                    exists = false;
-                }
+                isLoaded = obj.loadFromString(line);
 
             }
         }
         file.close();
     }
 
-    return exists;
+    return isLoaded;
 }
 
 bool FileManager::deleteLine(const std::string &identifier) const {

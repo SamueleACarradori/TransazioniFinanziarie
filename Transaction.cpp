@@ -57,8 +57,13 @@ std::string Transaction::toString() const {
     return idTransaction+";"+idSenderAccount+";"+idReceiverAccount+";"+std::to_string(amount)+";"+comment+";";
 }
 
-void Transaction::loadFromString(const std::string &line) {
-    IFileConfig::loadFromString(line,';');
+bool Transaction::loadFromString(const std::string &line) {
+    try {
+        IFileConfig::loadFromString(line,';');
+        return true;
+    }catch  (std::out_of_range &e) {
+        return false;
+    }
 }
 
 

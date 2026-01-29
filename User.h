@@ -12,7 +12,6 @@
 /**
  * This class is designed to be initialized by file or by constructor in full.
  * Once initialized it cannot be modified due to security reasons.
- *
  */
 class User : public IFileConfig {
 public:
@@ -21,9 +20,6 @@ public:
 
     // Constructor by value
     explicit User(std::string username, std::string id = "",const std::vector<CheckingAccount> &accounts = {});
-
-    // Copy Constructor
-    User(const User &user);
 
 
     // getters
@@ -47,7 +43,7 @@ public:
     std::string toString() const override;
 
     // Standard input method for loading .txt file
-    void loadFromString(const std::string &line) override;
+    bool loadFromString(const std::string &line) override;
 
     //void loadFromString(const std::string &line, const char delimiter) override;
 
@@ -59,7 +55,7 @@ protected:
     User() = default;
 
     // Method created for complying with the 'request' for some constructors for a deep copy
-    void init(const IFileConfig* obj) override;
+    //void init(const IFileConfig* obj) override;
 
     //initialize object during string loading
     void init(int index, const std::string& attribute) override;

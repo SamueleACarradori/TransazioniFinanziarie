@@ -44,7 +44,7 @@ public:
 
     std::string toString() const override;
 
-    void loadFromString(const std::string &line) override;
+    bool loadFromString(const std::string &line) override;
 
 protected:
 

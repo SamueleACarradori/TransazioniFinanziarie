@@ -77,10 +77,16 @@ std::string User::toString() const {
     return id+";"+username+";";
 }
 
-void User::loadFromString(const std::string &line) {
-    IFileConfig::loadFromString(line,';');
+bool User::loadFromString(const std::string &line) {
+    try {
+        IFileConfig::loadFromString(line,';');
+        return true;
+    }catch  (std::out_of_range &e) {
+        return false;
+    }
 }
 
+/*
 void User::init(const IFileConfig* obj) {
     // dynamic cast the parent class to the child class
     const auto user = dynamic_cast<const User*>(obj);
@@ -89,6 +95,7 @@ void User::init(const IFileConfig* obj) {
     username = user->username;
     accounts = user->accounts;
 }
+*/
 
 void User::init(const int index, const std::string& attribute) {
     switch (index) {

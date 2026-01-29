@@ -21,13 +21,15 @@ public:
     // Default Constructor since no attributes
     IFileConfig() = default;
 
-    // Copy Constructor
+    /*
+     * Copy Constructor
     IFileConfig(const IFileConfig& obj) {
         // calling init() this way should automatically call
         // the function redefined inside the derived class
         // also if init() is not redefined throws an exception
         init(&obj);
     }
+    */
 
     // Provide destructor default implementation
     virtual ~IFileConfig() = default;
@@ -53,7 +55,7 @@ public:
      * to redefine it so that is visible in the .cpp the kind of implementation each one
      * of them has without having to run with runtime call backlog if something goes wrong.
      */
-    virtual void loadFromString(const std::string& line) = 0;
+    virtual bool loadFromString(const std::string& line) = 0;
 
 protected:
 
@@ -74,12 +76,13 @@ protected:
         }
     }
 
-    //Init is defined here so that all subclasses have it for Copy Constructor
-    //to fix the inheritance problem the IFileConfig method just throws an exception when called
-    // ensuring that the right call at runtime is made //TODO test it
+    /*Init is defined here so that all subclasses have it for Copy Constructor
+     *to fix the inheritance problem the IFileConfig method just throws an exception
+     *when called ensuring that the right call at runtime is made
     virtual void init(const IFileConfig* obj) {
-        //TODO throw exception
+        // throw exception
     };
+    */
 
     //Initialize specific child object during loadFromString()
     virtual void init(int index, const std::string& attribute) = 0;

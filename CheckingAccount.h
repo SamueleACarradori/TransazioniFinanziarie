@@ -42,7 +42,7 @@ public:
     std::string toString() const override;
 
     // Standard input for loading on .txt file
-    void loadFromString(const std::string &line) override;
+    bool loadFromString(const std::string &line) override;
 
 
     ~CheckingAccount() override = default;
