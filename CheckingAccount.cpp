@@ -35,14 +35,6 @@ std::string CheckingAccount::toString() const {
     return id+";"+idUser+";"+std::to_string(balance)+";";
 }
 
-bool CheckingAccount::loadFromString(const std::string &line,const std::string &identifier){
-    if (line.find(identifier) != std::string::npos) {
-        CheckingAccount::loadFromString(line);
-        return true;
-    }
-    return false;
-}
-
 void CheckingAccount::loadFromString(const std::string &line) {
     //Uses id for identify the user
     std::stringstream ss(line);

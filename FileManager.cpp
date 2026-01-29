@@ -58,7 +58,9 @@ bool FileManager::load(IFileConfig& obj,const std::string& identifier) const {
     if (!file.is_open()) {
         std::string line;
         while (getline(file,line) && !isLoaded) {
-            isLoaded = obj.loadFromString(line, identifier);
+            if (line.find(identifier) != std::string::npos) {
+                isLoaded = obj.loadFromString(line);
+            }
         }
         file.close();
     }

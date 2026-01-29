@@ -41,14 +41,11 @@ public:
     // Standard output for saving on .txt file
     std::string toString() const override;
 
-    // Identifier is used as id of the account, so it searches only for the account id
-    bool loadFromString(const std::string &line, const std::string &identifier) override;
+    // Standard input for loading on .txt file
+    void loadFromString(const std::string &line) override;
 
 
     ~CheckingAccount() override = default;
-protected:
-
-    void loadFromString(const std::string &line) override;
 
 private:
     float balance = 0;

@@ -46,8 +46,8 @@ public:
     // Standard output for saving on .txt file
     std::string toString() const override;
 
-    // Identifier can be anything but the accounts since they are saved in a file on their own
-    bool loadFromString(const std::string &line, const std::string &identifier) override;
+    // Standard input method for loading .txt file
+    void loadFromString(const std::string &line) override;
 
     //void loadFromString(const std::string &line) override;
 
@@ -63,9 +63,6 @@ protected:
 
     // Return the index of the correspondent Account
     short findAccountIndexById(const std::string& idAccount) const;
-
-    //we don't user of this class to abuse this method so is downgraded to protected
-    void loadFromString(const std::string &line) override;
 
 private:
 

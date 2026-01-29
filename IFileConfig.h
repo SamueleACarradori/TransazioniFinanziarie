@@ -45,10 +45,10 @@ public:
 
     // The identifier is the string used to match the line
     // we want to load usually is the id
-    virtual bool loadFromString(const std::string& line, const std::string& identifier) = 0;
+    //virtual bool loadFromString(const std::string& line, const std::string& identifier) = 0;
 
-    //version without identifier, implementation not required
-    virtual void loadFromString(const std::string& line);
+    // Standardizing loading from file.txt
+    virtual void loadFromString(const std::string& line) = 0;
 
 protected:
     //Init is defined here so that all subclasses have it for Copy Constructor

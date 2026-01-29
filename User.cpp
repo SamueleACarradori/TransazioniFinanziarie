@@ -79,14 +79,6 @@ std::string User::toString() const {
     return id+";"+username+";";
 }
 
-bool User::loadFromString(const std::string &line,const std::string &identifier){
-    if (line.find(identifier) != std::string::npos) {
-        User::loadFromString(line);
-        return true;
-    }
-    return false;
-}
-
 void User::loadFromString(const std::string &line) {
     //Uses id for identify the user
     std::stringstream ss(line);
