@@ -6,16 +6,19 @@
 #define TRANSAZIONIFINANZIARIE_TRANSACTION_H
 #include <string>
 
+#include "IFileConfig.h"
 
-class Transaction {
+
+class Transaction : public IFileConfig{
 public:
 
     explicit Transaction(const std::string &line);
 
-    Transaction(const std::string &id_sender_account, const std::string &id_receiver_account,
-        const std::string &id_transaction, float amount, const std::string &comment = "");
+    Transaction(std::string id_sender_account, std::string id_receiver_account,
+         float amount, std::string comment = "",std::string id_transaction="");
 
     //getters
+
     std::string getIdSenderAccount();
 
     std::string getIdReceiverAccount();
@@ -28,12 +31,17 @@ public:
 
 
     //setters
+
     void setComment(const std::string &comment);
 
     void setAmount(float amount);
 
-//protected:
 
+    // Override methods
+
+    std::string toString() const override;
+
+    void loadFromString(const std::string &line) override;
 
 private:
     std::string idSenderAccount;

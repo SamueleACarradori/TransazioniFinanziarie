@@ -22,7 +22,7 @@
 class CheckingAccount : public IFileConfig{
 public:
     //Constructor by string
-    CheckingAccount(const std::string &line, const std::string &identifier);
+    explicit CheckingAccount(const std::string &line);
 
     //Construct by values, balance < 0 is ok since exists accounts in debt or 'in red'
     CheckingAccount(float balance,std::string  id,std::string  idUser);

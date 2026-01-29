@@ -7,10 +7,10 @@
 #include <sstream>
 #include <utility>
 
-CheckingAccount::CheckingAccount(const std::string &line, const std::string &identifier) {
-    if (!CheckingAccount::loadFromString(line, identifier)) {
-    }
-    //TODO throw exception
+// Not catching the exception since the problem has to be resolved at
+// the level of the caller of the constructor
+CheckingAccount::CheckingAccount(const std::string &line) {
+    CheckingAccount::loadFromString(line);
 }
 
 CheckingAccount::CheckingAccount(const float balance, std::string  id, std::string  idUser) : balance(balance), id(std::move(id)), idUser(std::move(idUser)) {}

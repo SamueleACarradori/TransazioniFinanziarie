@@ -17,7 +17,7 @@
 
 class IFileConfig {
 public:
-    // Default Constructor
+    // Default Constructor since no attributes
     IFileConfig() = default;
 
     // Copy Constructor
