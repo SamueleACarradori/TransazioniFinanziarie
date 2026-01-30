@@ -18,7 +18,7 @@ Transaction::Transaction(std::string id_sender_account, std::string id_receiver_
     idSenderAccount(std::move(id_sender_account)),idReceiverAccount(std::move(id_receiver_account)),
     idTransaction(std::move(id_transaction)), amount(amount){
     if (amount <= 0) {
-        //TODO throw exception
+        throw std::invalid_argument("Amount must be greater than 0");
     }
     // Maximum characters allowed in a comment //TODO test if correct
     this->comment.reserve(20);
@@ -68,6 +68,11 @@ bool Transaction::loadFromString(const std::string &line) {
 
 
 void Transaction::init(int index, const std::string &attribute) {
+    switch (index) {
+        case 0:
+        case 1:
+        default: throw std::out_of_range("Index out of range, no more initialization is possible.");
+    }
 }
 
 

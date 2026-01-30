@@ -50,6 +50,6 @@ void CheckingAccount::init(const int index, const std::string &attribute) {
         case 1: idUser = attribute; break;
         case 3: balance = std::stof(attribute); break;
             //space to add more
-        default: throw std::out_of_range("Index out of range, no more initialization is possible.") ;//TODO throw exception
+        default: throw std::out_of_range("Index out of range, no more initialization is possible.") ;
     }
 }

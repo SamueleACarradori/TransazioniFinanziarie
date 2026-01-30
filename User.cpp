@@ -102,7 +102,7 @@ void User::init(const int index, const std::string& attribute) {
         case 0: id = attribute; break;
         case 1: username = attribute; break;
 
-        default: ;//TODO throw exception
+        default: throw std::out_of_range("Index out of range, no more initialization is possible.");
     }
 }
 
@@ -122,7 +122,7 @@ short User::findAccountIndexById(const std::string &idAccount) const {
     }
 
     if (!found) {
-        //TODO throw exception
+        throw account_not_exists();
     }
     return i;
 }

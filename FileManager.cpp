@@ -13,7 +13,7 @@
 
 FileManager::FileManager( std::string fileName) : fileName(std::move(fileName)) {
     if (!endsWith(this->fileName, ".txt")) {
-        //TODO throw exception
+        throw std::invalid_argument("The name of the file must end with .txt");
     }
     if(!fileExists()) {
         //using ofstream for output file operations.
@@ -22,7 +22,7 @@ FileManager::FileManager( std::string fileName) : fileName(std::move(fileName)) 
 
         // Check if the file was successfully created.
         if (!file.is_open()){
-            //TODO throw exception
+            throw std::runtime_error("Could not create file.");
         }
         file.close();
     }
