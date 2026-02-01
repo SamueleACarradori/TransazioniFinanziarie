@@ -5,8 +5,9 @@
 #include "User.h"
 
 #include <random>
-#include <sstream>
 #include <utility>
+
+#include "exceptions/account_dont_exists_error.h"
 
 
 User::User(const std::string &line, const std::string &idUser){
@@ -23,9 +24,6 @@ User::User(std::string username, std::string  id, const std::vector<CheckingAcco
     }
 }
 
-User::User(const User &user) {
-    User::init(&user);
-}
 
 CheckingAccount User::getAccount(const std::string& idAccount) {
     //find index
@@ -62,11 +60,10 @@ bool User::deleteAccount(const CheckingAccount& account) {
 
 bool User::changeAccountBalance(const std::string& idAccount, const float amount) {
     bool success = true;
-    //TODO catch multiple exceptions
     try {
         const short i = User::findAccountIndexById(idAccount);
         accounts[i].changeBalance(amount);
-    }catch (std::exception &e) {
+    }catch (account_dont_exists_error &e) {
         success = false;
     }
     return success;
@@ -122,7 +119,7 @@ short User::findAccountIndexById(const std::string &idAccount) const {
     }
 
     if (!found) {
-        throw account_not_exists();
+        throw account_dont_exists_error();
     }
     return i;
 }

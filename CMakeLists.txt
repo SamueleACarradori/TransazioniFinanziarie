@@ -18,5 +18,4 @@ add_executable(TransazioniFinanziarie
         Date.h
         IFileConfig.h
         test/runAllTests.cpp
-        exceptions/account_dont_exists_error.cpp
         exceptions/account_dont_exists_error.h)

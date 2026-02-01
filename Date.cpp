@@ -8,6 +8,7 @@
 #include <chrono>
 #include <iostream>
 
+
 Date::Date() {
     // Get current time as a time_point (system_clock)
     auto now = std::chrono::system_clock::now();
@@ -20,7 +21,25 @@ Date::Date() {
 }
 
 Date::Date(const std::string& date) {
-    //TODO
+
+    // Initialize a tm structure to hold the parsed date
+    std::tm tm = {};
+
+    // Create a string stream to parse the date string
+    std::istringstream ss(date);
+
+    //TODO test this
+    // Parse the date string using std::get_time
+    ss >> std::get_time(&tm, "%d/%m/%Y-%H:%M:%S;");
+
+
+    // Check if parsing was successful
+    if (ss.fail()) {
+        throw std::invalid_argument("Invalid date");
+    }
+
+    // Convert the parsed date to a time_t value
+    this->date = tm;
 }
 
 unsigned short Date::getDay() const {
@@ -49,6 +68,6 @@ unsigned short Date::getSeconds() const {
 
 std::string Date::toString() const {
     std::array<char, 80> buffer;
-    std::strftime(buffer.data(), buffer.size(), "%d-%m-%Y;%H:%M:%S;", &date);
+    std::strftime(buffer.data(), buffer.size(), "%d/%m/%Y-%H:%M:%S;", &date);
     return buffer.data();
 }
