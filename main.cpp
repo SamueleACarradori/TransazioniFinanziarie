@@ -3,6 +3,8 @@
 //
 
 
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include "Transaction.h"
 #include "User.h"
@@ -49,6 +51,7 @@ int main () {
     checkingFile.load(*checking,pippo.getAccount()[0].getAccountId());
     Transaction* transaction;
     transactionFile.load(*transaction,transaction1.getIdTransaction());
+
 
     std::cout << "finished" << std::endl;
     return 0;

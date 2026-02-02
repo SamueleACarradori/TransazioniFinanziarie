@@ -77,10 +77,14 @@ bool Transaction::loadFromString(const std::string &line) {
 }
 
 
-void Transaction::init(int index, const std::string &attribute) {
+void Transaction::init(const int index, const std::string &attribute) {
     switch (index) {
-        case 0:
-        case 1:
+        case 0: idTransaction = attribute; break;
+        case 1: idSenderAccount = attribute; break;
+        case 2: idReceiverAccount = attribute; break;
+        case 3: amount = stof(attribute); break;
+        case 4: date = Date(attribute); break;
+
         default: throw std::out_of_range("Index out of range, no more initialization is possible.");
     }
 }

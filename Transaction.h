@@ -49,7 +49,7 @@ public:
 
     // Override methods
 
-    std::string toString() const override;
+    [[nodiscard]] std::string toString() const override;
 
     bool loadFromString(const std::string &line) override;
 

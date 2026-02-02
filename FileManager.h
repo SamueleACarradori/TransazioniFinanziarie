@@ -16,27 +16,31 @@
 
 class FileManager {
 public:
-    explicit FileManager(std::string fileName);
+    explicit FileManager(std::string fileName, std::string filePath = "");
 
-    static bool fileExists(const std::string& fileName);
+    static bool fileExists(const std::string& filePath);
 
     [[nodiscard]] bool fileExists() const;
 
     [[nodiscard]] bool deleteFile() const;
 
-    bool save(const IFileConfig& obj) const;
+    [[nodiscard]] bool save(const IFileConfig& obj) const;
 
-    bool load(IFileConfig& obj, const std::string& identifier) const;
+    [[nodiscard]] bool load(IFileConfig& obj, const std::string& identifier) const;
 
-    bool deleteLine(const std::string& identifier) const;
+    [[nodiscard]] bool deleteLine(const std::string& identifier) const;
+
 
 protected:
+
+    static std::string getAbsolutePath(bool standardPath = true);
 
     static bool endsWith(const std::string& str, const std::string& suffix);
 
 
 private:
     std::string fileName;
+    std::string filePath;
 };
 
 
