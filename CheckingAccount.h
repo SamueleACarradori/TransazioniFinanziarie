@@ -25,11 +25,13 @@ public:
     explicit CheckingAccount(const std::string &line);
 
     //Construct by values, balance < 0 is ok since exists accounts in debt or 'in red'
-    CheckingAccount(float balance,std::string  id,std::string  idUser);
+    CheckingAccount(float balance,std::string  idUser,std::string  id="");
 
-    void changeBalance(float change);
+    void addBalance(float change);
 
-    // I don't know what kind of control I could do here since there is no password nor autentication system
+    void subtractBalance(float change);
+
+    // I don't know what kind of control I could do here since there is no password nor authentication system
     void transferAccountProperty(const std::string& newUser);
 
     //getters

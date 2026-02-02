@@ -16,27 +16,30 @@
 class User : public IFileConfig {
 public:
     //Constructor by string
-    User(const std::string &line, const std::string &idUser);
+    explicit User(const std::string &line);
 
     // Constructor by value
-    explicit User(std::string username, std::string id = "",const std::vector<CheckingAccount> &accounts = {});
+    explicit User(std::string username, std::string id,const std::vector<CheckingAccount> &accounts = {});
 
 
     // getters
+    std::vector<CheckingAccount> getAccount();
+
     CheckingAccount getAccount(const std::string& idAccount);
 
+    void addAccount(float balance);
 
-    // setters
     void addAccount(const CheckingAccount& account);
 
-    // add account searching in the filesystem
     void addAccount(const std::string& line, const std::string &idAccount);
 
     bool deleteAccount(const std::string& idAccount);
 
     bool deleteAccount(const CheckingAccount& account);
 
-    bool changeAccountBalance(const std::string& idAccount, float amount);
+    bool addAccountBalance(const std::string& idAccount, float amount);
+
+    bool subtractAccountBalance(const std::string &idAccount, float amount);
 
 
     // Standard output for saving on .txt file
@@ -52,7 +55,7 @@ public:
 protected:
     // Constructor only used to initialize obj inside
     // the other constructors and hidden for user use.
-    User() = default;
+    //User() = default;
 
     // Method created for complying with the 'request' for some constructors for a deep copy
     //void init(const IFileConfig* obj) override;

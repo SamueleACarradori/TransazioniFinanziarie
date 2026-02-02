@@ -6,6 +6,8 @@
 #define TRANSAZIONIFINANZIARIE_TRANSACTION_H
 #include <string>
 
+#include "CheckingAccount.h"
+#include "Date.h"
 #include "IFileConfig.h"
 
 
@@ -14,8 +16,13 @@ public:
 
     explicit Transaction(const std::string &line);
 
+    Transaction(CheckingAccount& sender, CheckingAccount& receiver,
+        float amount, std::string comment = "",const std::string& id_transaction="");
+
+    //this constructor could be made protected in order to avoid a security gap of
+    //phantom transaction never occurred inside the actual checking account
     Transaction(std::string id_sender_account, std::string id_receiver_account,
-         float amount, std::string comment = "",std::string id_transaction="");
+        float amount, std::string comment = "",std::string id_transaction="");
 
     //getters
 
@@ -57,6 +64,7 @@ private:
     std::string idTransaction;
     std::string comment;
     float amount;
+    Date date;
 };
 
 

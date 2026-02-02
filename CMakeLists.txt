@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(test)
 
-add_executable(TransazioniFinanziarie
+set(SOURCE_FILES main.cpp
         User.cpp
         User.h
         CheckingAccount.cpp
@@ -17,5 +17,8 @@ add_executable(TransazioniFinanziarie
         Date.cpp
         Date.h
         IFileConfig.h
-        test/runAllTests.cpp
-        exceptions/account_dont_exists_error.h)
+        exceptions/account_dont_exists_error.h )
+
+add_executable(TransazioniFinanziarie main.cpp)
+add_library(core ${SOURCE_FILES})
+target_link_libraries(TransazioniFinanziarie core)

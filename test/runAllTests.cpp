@@ -6,6 +6,8 @@
 
 int main () {
     //TODO implement tests
+
+    std::cout << "Prova prova" << std::endl;
     return 0;
 }
 

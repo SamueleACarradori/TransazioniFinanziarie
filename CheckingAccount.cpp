@@ -13,11 +13,24 @@ CheckingAccount::CheckingAccount(const std::string &line) {
     CheckingAccount::loadFromString(line);
 }
 
-CheckingAccount::CheckingAccount(const float balance, std::string  id, std::string  idUser) : balance(balance), id(std::move(id)), idUser(std::move(idUser)) {}
+CheckingAccount::CheckingAccount(const float balance, std::string  idUser,std::string  id) : balance(balance), id(std::move(id)), idUser(std::move(idUser)) {
+    if (id.empty()) {
+        this->id = IFileConfig::generateRandomString();
+    }
+}
 
-void CheckingAccount::changeBalance(const float change) {
+void CheckingAccount::addBalance(const float change) {
+    if (change <= 0)
+        throw std::invalid_argument("Amount must be greater than 0");
     balance += change;
 }
+
+void CheckingAccount::subtractBalance(const float change) {
+    if (change <= 0)
+        throw std::invalid_argument("Amount must be greater than 0");
+    balance -= change;
+}
+
 
 void CheckingAccount::transferAccountProperty(const std::string& newUser) {
     idUser = newUser;

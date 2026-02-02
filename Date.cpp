@@ -30,7 +30,7 @@ Date::Date(const std::string& date) {
 
     //TODO test this
     // Parse the date string using std::get_time
-    ss >> std::get_time(&tm, "%d/%m/%Y-%H:%M:%S;");
+    ss >> std::get_time(&tm, DATE_HOUR_FORMAT);
 
 
     // Check if parsing was successful
@@ -68,6 +68,6 @@ unsigned short Date::getSeconds() const {
 
 std::string Date::toString() const {
     std::array<char, 80> buffer;
-    std::strftime(buffer.data(), buffer.size(), "%d/%m/%Y-%H:%M:%S;", &date);
+    std::strftime(buffer.data(), buffer.size(), DATE_HOUR_FORMAT, &date);
     return buffer.data();
 }

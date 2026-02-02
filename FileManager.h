@@ -20,9 +20,9 @@ public:
 
     static bool fileExists(const std::string& fileName);
 
-    bool fileExists() const;
+    [[nodiscard]] bool fileExists() const;
 
-    bool deleteFile() const;
+    [[nodiscard]] bool deleteFile() const;
 
     bool save(const IFileConfig& obj) const;
 

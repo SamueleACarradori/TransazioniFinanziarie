@@ -7,6 +7,9 @@
 #include <ctime>
 #include <string>
 
+//Defining the format for the date string
+#define DATE_HOUR_FORMAT "%d/%m/%Y-%H:%M:%S"
+
 /*
  * Class representing a Date using std library
  */

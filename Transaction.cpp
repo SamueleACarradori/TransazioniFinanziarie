@@ -12,6 +12,15 @@
 Transaction::Transaction(const std::string &line) {
     Transaction::loadFromString(line);
 }
+
+Transaction::Transaction(CheckingAccount &sender, CheckingAccount &receiver, const float amount,
+    std::string comment,const std::string& id_transaction) :
+    Transaction(sender.getAccountId(),receiver.getAccountId(),amount,std::move(comment),id_transaction){
+
+    sender.subtractBalance(amount);
+    receiver.addBalance(amount);
+}
+
 // in this case amount must be positive since it's a transaction between parts and the sender cannot send negative money
 Transaction::Transaction(std::string id_sender_account, std::string id_receiver_account,
     const float amount, std::string comment,std::string id_transaction) :
@@ -27,6 +36,7 @@ Transaction::Transaction(std::string id_sender_account, std::string id_receiver_
     if (idTransaction.empty()) {
         idTransaction = IFileConfig::generateRandomString(16);
     }
+    this->date = Date();
 }
 
 std::string Transaction::getIdSenderAccount() const{
@@ -54,7 +64,7 @@ void Transaction::setComment(const std::string &comment) {
 }
 
 std::string Transaction::toString() const {
-    return idTransaction+";"+idSenderAccount+";"+idReceiverAccount+";"+std::to_string(amount)+";"+comment+";";
+    return idTransaction+";"+idSenderAccount+";"+idReceiverAccount+";"+std::to_string(amount)+";"+comment+";"+date.toString();
 }
 
 bool Transaction::loadFromString(const std::string &line) {

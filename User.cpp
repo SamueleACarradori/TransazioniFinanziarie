@@ -10,7 +10,7 @@
 #include "exceptions/account_dont_exists_error.h"
 
 
-User::User(const std::string &line, const std::string &idUser){
+User::User(const std::string &line){
     //Specifying user class to force the compiler on using the redefined function
     User::loadFromString(line);
 }
@@ -24,11 +24,19 @@ User::User(std::string username, std::string  id, const std::vector<CheckingAcco
     }
 }
 
+std::vector<CheckingAccount> User::getAccount() {
+    return accounts;
+}
+
 
 CheckingAccount User::getAccount(const std::string& idAccount) {
     //find index
     const short i = findAccountIndexById(idAccount);
     return accounts[i];
+}
+
+void User::addAccount(const float balance) {
+    User::addAccount(CheckingAccount(balance,id));
 }
 
 void User::addAccount(const CheckingAccount& account) {
@@ -58,12 +66,27 @@ bool User::deleteAccount(const CheckingAccount& account) {
     return deleteAccount(account.getAccountId());
 }
 
-bool User::changeAccountBalance(const std::string& idAccount, const float amount) {
+bool User::addAccountBalance(const std::string &idAccount, float amount) {
     bool success = true;
     try {
         const short i = User::findAccountIndexById(idAccount);
-        accounts[i].changeBalance(amount);
+        accounts[i].addBalance(amount);
     }catch (account_dont_exists_error &e) {
+        success = false;
+    }catch (std::invalid_argument &e) {
+        success = false;
+    }
+    return success;
+}
+
+bool User::subtractAccountBalance(const std::string& idAccount, const float amount) {
+    bool success = true;
+    try {
+        const short i = User::findAccountIndexById(idAccount);
+        accounts[i].subtractBalance(amount);
+    }catch (account_dont_exists_error &e) {
+        success = false;
+    }catch (std::invalid_argument &e) {
         success = false;
     }
     return success;
