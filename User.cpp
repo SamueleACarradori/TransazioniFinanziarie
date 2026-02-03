@@ -10,16 +10,11 @@
 #include "exceptions/account_dont_exists_error.h"
 
 
-User::User(const std::string &line){
-    //Specifying user class to force the compiler on using the redefined function
-    User::loadFromString(line);
-}
-
 User::User(std::string username, std::string  id, const std::vector<CheckingAccount> &accounts) :
     id(std::move(id)),
     username(std::move(username)),
     accounts(accounts) {
-    if (id.empty()) {
+    if (this->id.empty()) {
         this->id = IFileConfig::generateRandomString();
     }
 }

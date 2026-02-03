@@ -83,7 +83,8 @@ void Transaction::init(const int index, const std::string &attribute) {
         case 1: idSenderAccount = attribute; break;
         case 2: idReceiverAccount = attribute; break;
         case 3: amount = stof(attribute); break;
-        case 4: date = Date(attribute); break;
+        case 4: comment = attribute; break;
+        case 5: date = Date(attribute); break;
 
         default: throw std::out_of_range("Index out of range, no more initialization is possible.");
     }

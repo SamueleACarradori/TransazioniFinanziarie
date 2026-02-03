@@ -68,21 +68,24 @@ bool FileManager::save(const IFileConfig& obj) const {
     return false;
 }
 
-bool FileManager::load(IFileConfig& obj,const std::string& identifier) const {
+bool FileManager::load(IFileConfig& obj, const std::string& identifier) const {
     std::ifstream file(filePath, std::ios::in);
-    bool isLoaded = false;
-
-    if (file.is_open()) {
-        std::string line;
-        while (getline(file,line) && !isLoaded) {
-            if (line.find(identifier) != std::string::npos) {
-                isLoaded = obj.loadFromString(line);
-            }
-        }
-        file.close();
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file "+filePath+".");
     }
+    //TODO fix
 
-    return isLoaded;
+    bool found = false;
+    std::string line;
+    while (getline(file,line) && !found) {
+        if (line.find(identifier) != std::string::npos) {
+                found = obj.loadFromString(line);
+        }
+    }
+    file.close();
+
+
+    return found;
 }
 
 bool FileManager::deleteLine(const std::string &identifier) const {

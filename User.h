@@ -15,11 +15,12 @@
  */
 class User : public IFileConfig {
 public:
-    //Constructor by string
-    explicit User(const std::string &line);
+    //Default constructor used to create empty obj for loading purposes
+    User() = default;
+
 
     // Constructor by value
-    explicit User(std::string username, std::string id,const std::vector<CheckingAccount> &accounts = {});
+    explicit User(std::string username, std::string id = "",const std::vector<CheckingAccount> &accounts = {});
 
 
     // getters

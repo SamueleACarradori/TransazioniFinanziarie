@@ -35,7 +35,7 @@ public:
     virtual ~IFileConfig() = default;
 
     // Standardized string for saving on file
-    virtual std::string toString() const = 0;
+    [[nodiscard]] virtual std::string toString() const = 0;
 
     /*
      * NOTEtoSELF:
@@ -48,7 +48,7 @@ public:
 
     // The identifier is the string used to match the line
     // we want to load usually is the id
-    //virtual bool loadFromString(const std::string& line, const std::string& identifier) = 0;
+    // virtual bool loadFromString(const std::string& line, const std::string& identifier) = 0;
 
     /* Standardizing loading from file.txt
      * I thought of making this method not pure virtual, but I wanted every child class

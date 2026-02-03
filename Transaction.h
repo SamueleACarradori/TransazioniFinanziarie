@@ -13,6 +13,7 @@
 
 class Transaction : public IFileConfig{
 public:
+    Transaction() = default;
 
     explicit Transaction(const std::string &line);
 
@@ -63,7 +64,7 @@ private:
     // standard length is 16 since there are far more transactions than anything else
     std::string idTransaction;
     std::string comment;
-    float amount;
+    float amount{};
     Date date;
 };
 

@@ -9,10 +9,21 @@
 #include "Transaction.h"
 #include "User.h"
 
+void deleteAllFiles() {
+    auto userFile = FileManager("user.txt");
+    auto checkingFile = FileManager("checking.txt");
+    auto transactionFile = FileManager("transaction.txt");
+
+    userFile.deleteFile();
+    checkingFile.deleteFile();
+    transactionFile.deleteFile();
+}
+
 int main () {
+    deleteAllFiles();
     //Initialize user
     auto pippo = User("Pippo","provaID");
-    auto franco = User("Franco","");
+    auto franco = User("Franco");
 
     //Initialize accounts
     pippo.addAccount(20.23);
@@ -45,14 +56,13 @@ int main () {
     transactionFile.save(transaction3);
 
     // try loading
-    User* user;
-    userFile.load(*user,"provaID");
-    CheckingAccount* checking;
-    checkingFile.load(*checking,pippo.getAccount()[0].getAccountId());
-    Transaction* transaction;
-    transactionFile.load(*transaction,transaction1.getIdTransaction());
+    User user;
+    bool attr = userFile.load(user,"provaID");
+    CheckingAccount checking;
+    attr = checkingFile.load(checking,pippo.getAccount()[0].getAccountId());
+    Transaction transaction;
+    attr = transactionFile.load(transaction,transaction1.getIdTransaction());
 
-
-    std::cout << "finished" << std::endl;
+    std::cout << std::endl << "FINISHED" << std::endl;
     return 0;
 }

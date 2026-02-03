@@ -21,6 +21,9 @@
 
 class CheckingAccount : public IFileConfig{
 public:
+    //Default constructor used to create empty obj for loading purposes
+    CheckingAccount() = default;
+
     //Constructor by string
     explicit CheckingAccount(const std::string &line);
 
@@ -35,13 +38,13 @@ public:
     void transferAccountProperty(const std::string& newUser);
 
     //getters
-    std::string getAccountId() const;
+    [[nodiscard]] std::string getAccountId() const;
 
-    float getBalance() const;
+    [[nodiscard]] float getBalance() const;
 
 
     // Standard output for saving on .txt file
-    std::string toString() const override;
+    [[nodiscard]] std::string toString() const override;
 
     // Standard input for loading on .txt file
     bool loadFromString(const std::string &line) override;
