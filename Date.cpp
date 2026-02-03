@@ -28,8 +28,8 @@ Date::Date(const std::string& date) {
     // Create a string stream to parse the date string
     std::istringstream ss(date);
 
-    //TODO test this
-    // Parse the date string using std::get_time
+    // Even if this piece of code gives error
+    // it works, I don't know if it is my IDE the problem
     ss >> std::get_time(&tm, DATE_HOUR_FORMAT);
 
 

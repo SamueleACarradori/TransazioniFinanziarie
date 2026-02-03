@@ -63,6 +63,10 @@ int main () {
     Transaction transaction;
     attr = transactionFile.load(transaction,transaction1.getIdTransaction());
 
+    std::cout << user.toString() << std::endl;
+    std::cout << checking.toString() << std::endl;
+    std::cout << transaction.toString() << std::endl;
+
     std::cout << std::endl << "FINISHED" << std::endl;
     return 0;
 }
