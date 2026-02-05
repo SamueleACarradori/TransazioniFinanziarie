@@ -34,11 +34,6 @@ void CheckingAccount::subtractBalance(const float change) {
     balance -= change;
 }
 
-
-void CheckingAccount::transferAccountProperty(const std::string& newUser) {
-    idUser = newUser;
-}
-
 std::string CheckingAccount::getAccountId() const {
     return id;
 }

@@ -34,9 +34,6 @@ public:
 
     void subtractBalance(float change);
 
-    // I don't know what kind of control I could do here since there is no password nor authentication system
-    void transferAccountProperty(const std::string& newUser);
-
     //getters
     [[nodiscard]] std::string getAccountId() const;
 
