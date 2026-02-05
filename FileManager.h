@@ -20,22 +20,28 @@ public:
 
     static bool fileExists(const std::string& filePath);
 
-    [[nodiscard]] bool fileExists() const;
-
-    [[nodiscard]] bool deleteFile() const;
+    bool fileExists() const;
 
     [[nodiscard]] bool save(const IFileConfig& obj) const;
 
     [[nodiscard]] bool load(IFileConfig& obj, const std::string& identifier) const;
 
-    [[nodiscard]] bool deleteLine(const std::string& identifier) const;
+    bool deleteLine(const std::string& identifier) const;
+
+    bool deleteLine(const IFileConfig& obj) const;
+
+    bool deleteFile() const;
 
 
 protected:
 
-    static std::string getAbsolutePath(bool standardPath = true);
+    static std::string getAbsolutePath(bool doStandardPath = true);
 
     static bool endsWith(const std::string& str, const std::string& suffix);
+
+    bool isSaved(const IFileConfig& obj) const;
+
+
 
 
 private:

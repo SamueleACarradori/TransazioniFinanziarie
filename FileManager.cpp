@@ -31,7 +31,7 @@ FileManager::FileManager( std::string fileName, std::string filePath) : fileName
 
         // Check if the file was successfully created.
         if (!file.is_open()){
-            throw std::runtime_error("Could not create file "+fileName+".");
+            throw std::runtime_error("Could not create file '"+this->fileName+"'.");
         }
         file.close();
     }
@@ -60,7 +60,7 @@ bool FileManager::save(const IFileConfig& obj) const {
     //open file in append
     std::ofstream file(filePath, std::ios::out | std::ios::app);
 
-    if (file.is_open()) {
+    if (file.is_open() && !isSaved(obj)) {
         file << obj.toString() << std::endl;
         file.close();
         return true;
@@ -73,7 +73,6 @@ bool FileManager::load(IFileConfig& obj, const std::string& identifier) const {
     if (!file.is_open()) {
         throw std::runtime_error("Could not open file "+filePath+".");
     }
-    //TODO fix
 
     bool found = false;
     std::string line;
@@ -83,7 +82,6 @@ bool FileManager::load(IFileConfig& obj, const std::string& identifier) const {
         }
     }
     file.close();
-
 
     return found;
 }
@@ -113,19 +111,27 @@ bool FileManager::deleteLine(const std::string &identifier) const {
     inFile.close();
 
     // Write back all lines except the removed one
-    std::ofstream outFile(filePath);
-    if (outFile.is_open() && found) {
-        for (const auto& l : lines) {
-            outFile << l << std::endl;
-        }
-        outFile.close();
-        return true;
-    }
+    if (found) {
 
+        //separating the ifs so that when I open the file
+        // I wipe it clean, and rewrite
+        std::ofstream outFile(filePath);
+        if (outFile.is_open()) {
+            for (const auto& l : lines) {
+                outFile << l << std::endl;
+            }
+            outFile.close();
+            return true;
+        }
+    }
     return false;
 }
 
-std::string FileManager::getAbsolutePath(const bool standardPath) {
+bool FileManager::deleteLine(const IFileConfig &obj) const {
+    return deleteLine(obj.toString());
+}
+
+std::string FileManager::getAbsolutePath(const bool doStandardPath) {
     char cwd[1024];
     if (getcwd(cwd, sizeof(cwd)) == nullptr) {
         throw std::runtime_error("Unable to locate working directory.");
@@ -133,10 +139,10 @@ std::string FileManager::getAbsolutePath(const bool standardPath) {
     auto filePath = std::string(cwd);
 
     //fix cmake-build-debug removing it from the filepath
-    if (standardPath) {
-        if (const std::string stringToRemove = "cmake-build-debug"; endsWith(filePath, stringToRemove)) {
-            const auto start_position_to_erase = filePath.find(stringToRemove);
-            filePath = filePath.erase(start_position_to_erase, stringToRemove.length());
+    if (doStandardPath) {
+        const std::string stringToRemove = "cmake-build-debug";
+        if (const auto start_position_to_erase = filePath.find(stringToRemove); start_position_to_erase != std::string::npos) {
+            filePath = filePath.erase(start_position_to_erase, filePath.length()-stringToRemove.length());
         }
         filePath = filePath + "database/";
     }
@@ -147,4 +153,23 @@ bool FileManager::endsWith(const std::string &str, const std::string &suffix) {
     if (suffix.size() > str.size())
         return false;
     return str.substr(str.size() - suffix.size()) == suffix;
+}
+
+bool FileManager::isSaved(const IFileConfig &obj) const {
+
+    std::ifstream file(filePath, std::ios::in);
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file "+filePath+".");
+    }
+
+    bool found = false;
+    std::string line;
+    while (getline(file,line) && !found) {
+        if (line == obj.toString()) {
+            found = true;
+        }
+    }
+    file.close();
+
+    return found;
 }
