@@ -10,7 +10,8 @@
 // Not catching the exception since the problem has to be resolved at
 // the level of the caller of the constructor
 Transaction::Transaction(const std::string &line) {
-    Transaction::loadFromString(line);
+    if (!Transaction::loadFromString(line))
+        throw std::invalid_argument("CheckingAccount::loadFromString() failed");
 }
 
 Transaction::Transaction(CheckingAccount &sender, CheckingAccount &receiver, const float amount,
@@ -29,7 +30,7 @@ Transaction::Transaction(std::string id_sender_account, std::string id_receiver_
     if (amount <= 0) {
         throw std::invalid_argument("Amount must be greater than 0");
     }
-    // Maximum characters allowed in a comment //TODO test if correct
+    // Maximum characters allowed in a comment
     this->comment.reserve(20);
     this->comment = std::move(comment);
 
@@ -73,6 +74,8 @@ bool Transaction::loadFromString(const std::string &line) {
         return true;
     }catch  (std::out_of_range &e) {
         return false;
+    }catch (std::invalid_argument &e) {
+        return false;
     }
 }
 
@@ -86,7 +89,7 @@ void Transaction::init(const int index, const std::string &attribute) {
         case 4: comment = attribute; break;
         case 5: date = Date(attribute); break;
 
-        default: throw std::out_of_range("Index out of range, no more initialization is possible.");
+        default: throw std::out_of_range("Index out of range, no more initialization is possible."); break;
     }
 }
 

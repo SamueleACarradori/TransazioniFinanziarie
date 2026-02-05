@@ -38,8 +38,10 @@ TEST_F(CheckingAccountFixture, LoadFromString) {
 
     ASSERT_TRUE(account.loadFromString("3hJOyC9M;XQp6WAW2;190.29;"));
 
+    //invalid type during convertion
     ASSERT_FALSE(account.loadFromString("3hJOyC9M;XQp6WAW2;invalid argument;"));
 
+    //One too many arguments
     ASSERT_FALSE(account.loadFromString("3hJOyC9M;XQp6WAW2;190.29;invalid argument;"));
 
 }

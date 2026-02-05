@@ -59,10 +59,11 @@ protected:
     void init(int index,const std::string& attribute) override;
 
 private:
-    std::string idSenderAccount;
-    std::string idReceiverAccount;
     // standard length is 16 since there are far more transactions than anything else
     std::string idTransaction;
+
+    std::string idSenderAccount;
+    std::string idReceiverAccount;
     std::string comment;
     float amount{};
     Date date;
