@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 #include "../Date.h"
 
-TEST(DataSuite, DateTests){
+TEST(DateSuite, DateTests){
     //OK
     ASSERT_NO_THROW(Date("05/02/2026-22:43:21"));
 
