@@ -10,6 +10,8 @@
 #include <sstream>
 #include <string>
 
+#define STANDARD_ID_LENGTH 8
+
 /**
  * Interface created to give a common framework for all the classes that needs to be saved on file.
  * Althow I recognize it may be not the most efficient way  to save files on big scale project
@@ -89,7 +91,7 @@ protected:
 
 
     // Just an overkill method for solving a basic random string gen problem
-    static std::string generateRandomString(const int length = 8, const bool specialChar = false) {
+    static std::string generateRandomString(const int length = STANDARD_ID_LENGTH, const bool specialChar = false) {
         std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         if (specialChar)
             characters = characters + "!@#$%^&*-+";

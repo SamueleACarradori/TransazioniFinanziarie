@@ -4,11 +4,12 @@
 
 #include "gtest/gtest.h"
 
-int main () {
-    //TODO implement tests
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
 
-    std::cout << "Prova prova" << std::endl;
-    return 0;
+    // Returns 0 if everything is ok
+    // return 1 otherwise
+    return RUN_ALL_TESTS();
 }
 
 

@@ -24,23 +24,30 @@ public:
 
 
     // getters
+    std::string getUsername() const;
+
+    std::string getId() const;
+
     std::vector<CheckingAccount> getAccount();
 
     CheckingAccount getAccount(const std::string& idAccount);
 
+    //add account
     void addAccount(float balance);
 
     void addAccount(const CheckingAccount& account);
 
     void addAccount(const std::string& line, const std::string &idAccount);
 
-    bool deleteAccount(const std::string& idAccount);
-
-    bool deleteAccount(const CheckingAccount& account);
-
+    //add account balance
     bool addAccountBalance(const std::string& idAccount, float amount);
 
     bool subtractAccountBalance(const std::string &idAccount, float amount);
+
+    //delete account
+    bool deleteAccount(const std::string& idAccount);
+
+    bool deleteAccount(const CheckingAccount& account);
 
 
     // Standard output for saving on .txt file

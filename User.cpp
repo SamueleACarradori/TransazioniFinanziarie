@@ -16,7 +16,17 @@ User::User(std::string username, std::string  id, const std::vector<CheckingAcco
     accounts(accounts) {
     if (this->id.empty()) {
         this->id = IFileConfig::generateRandomString();
+    }else if(this->id.length() != STANDARD_ID_LENGTH) {
+        throw std::invalid_argument("Invalid ID length");
     }
+}
+
+std::string User::getUsername() const {
+    return username;
+}
+
+std::string User::getId() const {
+    return id;
 }
 
 std::vector<CheckingAccount> User::getAccount() {

@@ -7,10 +7,10 @@
 #include <sstream>
 #include <utility>
 
-// Not catching the exception since the problem has to be resolved at
-// the level of the caller of the constructor
+//Resending the exception to the caller
 CheckingAccount::CheckingAccount(const std::string &line) {
-    CheckingAccount::loadFromString(line);
+    if (!CheckingAccount::loadFromString(line))
+        throw std::out_of_range("CheckingAccount::loadFromString() failed");
 }
 
 CheckingAccount::CheckingAccount(const float balance, std::string  idUser,std::string  id) : balance(balance), id(std::move(id)), idUser(std::move(idUser)) {
