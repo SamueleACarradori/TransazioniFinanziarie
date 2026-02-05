@@ -7,6 +7,7 @@
 #include <random>
 #include <utility>
 
+#include "exceptions/account_already_exists_error.h"
 #include "exceptions/account_dont_exists_error.h"
 
 
@@ -45,6 +46,10 @@ void User::addAccount(const float balance) {
 }
 
 void User::addAccount(const CheckingAccount& account) {
+    for(CheckingAccount& currentAccount: accounts) {
+        if (currentAccount == account)
+            throw account_already_exists_error();
+    }
     accounts.push_back(account);
 }
 
@@ -58,9 +63,8 @@ void User::addAccount(const std::string& line, const std::string &idAccount) {
 bool User::deleteAccount(const std::string &idAccount) {
     bool deleted = true;
     try {
-        const short i = User::findAccountIndexById(idAccount);
-        accounts.erase(accounts.begin()+i);
-        //TODO verify if this is correct
+        const short index = User::findAccountIndexById(idAccount);
+        accounts.erase(accounts.begin()+index); // essendo un iterator sommo il mio index
     }catch (std::exception &e) {
         deleted = false;
     }
@@ -107,6 +111,8 @@ bool User::loadFromString(const std::string &line) {
         IFileConfig::loadFromString(line,';');
         return true;
     }catch  (std::out_of_range &e) {
+        return false;
+    }catch (std::invalid_argument &e) {
         return false;
     }
 }

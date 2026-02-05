@@ -32,11 +32,13 @@ public:
 
     CheckingAccount getAccount(const std::string& idAccount);
 
-    //add account
+    //generate account on the spot giving the initial balance
     void addAccount(float balance);
 
+    //add account checking if already exists
     void addAccount(const CheckingAccount& account);
 
+    // load account from string ad uses addAccount(account) for checking id already exists
     void addAccount(const std::string& line, const std::string &idAccount);
 
     //add account balance

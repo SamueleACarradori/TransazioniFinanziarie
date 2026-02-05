@@ -52,6 +52,11 @@ public:
 
     ~CheckingAccount() override = default;
 
+
+    friend bool operator==(const CheckingAccount &lhs, const CheckingAccount &rhs);
+
+    friend bool operator!=(const CheckingAccount &lhs, const CheckingAccount &rhs);
+
 protected:
 
     void init(int index,const std::string& attribute) override;

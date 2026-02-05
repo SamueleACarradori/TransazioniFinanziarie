@@ -17,7 +17,8 @@ set(SOURCE_FILES main.cpp
         Date.cpp
         Date.h
         IFileConfig.h
-        exceptions/account_dont_exists_error.h )
+        exceptions/account_dont_exists_error.h
+        exceptions/account_already_exists_error.h)
 
 add_executable(TransazioniFinanziarie main.cpp)
 add_library(core ${SOURCE_FILES})
