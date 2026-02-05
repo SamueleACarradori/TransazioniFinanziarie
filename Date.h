@@ -30,6 +30,8 @@ public:
     //format: day/month/year-hour:minute:second
     std::string toString() const;
 
+    bool isLeapYear() const;
+
 private:
     std::tm date;
 };

@@ -22,7 +22,7 @@ void deleteAllFiles() {
 int main () {
     deleteAllFiles();
     //Initialize user
-    auto pippo = User("Pippo","provaID");
+    auto pippo = User("Pippo","provaID0");
     auto franco = User("Franco");
 
     //Initialize accounts

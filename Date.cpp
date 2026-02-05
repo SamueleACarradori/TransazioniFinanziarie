@@ -32,14 +32,22 @@ Date::Date(const std::string& date) {
     // it works, I don't know if it is my IDE the problem
     ss >> std::get_time(&tm, DATE_HOUR_FORMAT);
 
+    //If the std::tm object was obtained from std::get_time or the POSIX strptime,
+    //the value of tm_isdst is indeterminate, and needs to be set explicitly before calling mktime.
+    tm.tm_isdst = 0; // Not daylight saving
 
-    // Check if parsing was successful
-    if (ss.fail()) {
+    // also check if parsing was successful
+    if (ss.fail() || std::mktime(&tm) == -1) {
         throw std::invalid_argument("Invalid date");
     }
 
+    //If the std::tm object was obtained from std::get_time or the POSIX strptime,
+    //the value of tm_isdst is indeterminate, and needs to be set explicitly before calling mktime.
+    tm.tm_isdst = 0; // Not daylight saving
+
     // Convert the parsed date to a time_t value
     this->date = tm;
+
 }
 
 unsigned short Date::getDay() const {
@@ -69,5 +77,9 @@ unsigned short Date::getSeconds() const {
 std::string Date::toString() const {
     std::array<char, 80> buffer;
     std::strftime(buffer.data(), buffer.size(), DATE_HOUR_FORMAT, &date);
-    return buffer.data();
+    return std::string(buffer.data()) + ";";
+}
+
+bool Date::isLeapYear() const {
+    return std::chrono::year(date.tm_year).is_leap();
 }
