@@ -42,8 +42,6 @@ protected:
     bool isSaved(const IFileConfig& obj) const;
 
 
-
-
 private:
     std::string fileName;
     std::string filePath;

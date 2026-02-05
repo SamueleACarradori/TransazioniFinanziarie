@@ -4,6 +4,7 @@
 
 #include "FileManager.h"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -145,6 +146,10 @@ std::string FileManager::getAbsolutePath(const bool doStandardPath) {
             filePath = filePath.erase(start_position_to_erase, filePath.length()-stringToRemove.length());
         }
         filePath = filePath + "database/";
+
+        //create database dir if it doesnt exits.
+        if (!std::filesystem::exists(filePath))
+            std::filesystem::create_directory(filePath);
     }
     return filePath;
 }

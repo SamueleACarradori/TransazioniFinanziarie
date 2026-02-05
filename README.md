@@ -5,10 +5,10 @@ A C++ application for managing checking account transactions with file-based per
 ## 🏗️ Project Architecture
 + User    Represents a bank account user with personal information and account management capabilities
 + CheckingAccount     Manages the checking account balance and provides deposit/withdrawal functionality
-+ Transaction 	Represents individual financial transactions (deposits/withdrawals) with amounts and timestamp
++ Transaction 	Represents individual financial transactions between account holders with amounts and timestamp
 + Date	Utility class for handling date operations and formatting across the application
-+ FileManager     Handles file input/output operations for reading and writing transaction data
-+ TransactionsDatabase	Manages collections of transactions and provides database-like operations
++ FileManager     Handles file input/output operations for reading and writing data 
++ IFileConfig  Interface created for the explicit purpose of giving a common implementation for classes that want to save/loading from file. 
 
 
 > [!NOTE]\
