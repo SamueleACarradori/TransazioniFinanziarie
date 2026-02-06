@@ -4,6 +4,7 @@
 
 #include "FileManager.h"
 
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -113,7 +114,6 @@ bool FileManager::deleteLine(const std::string &identifier) const {
 
     // Write back all lines except the removed one
     if (found) {
-
         //separating the ifs so that when I open the file
         // I wipe it clean, and rewrite
         std::ofstream outFile(filePath);
@@ -133,11 +133,21 @@ bool FileManager::deleteLine(const IFileConfig &obj) const {
 }
 
 std::string FileManager::getAbsolutePath(const bool doStandardPath) {
+
+    /* deprecated way of finding path because it is linux specific
+
     char cwd[1024];
     if (getcwd(cwd, sizeof(cwd)) == nullptr) {
         throw std::runtime_error("Unable to locate working directory.");
     }
-    auto filePath = std::string(cwd);
+
+    */
+
+    //could send runtime exceptions just as previous method
+    auto filePath = std::string( std::filesystem::current_path());
+    if (filePath.empty()) {
+        throw std::runtime_error("Unable to locate working directory.");
+    }
 
     //fix cmake-build-debug removing it from the filepath
     if (doStandardPath) {

@@ -68,5 +68,9 @@ int main () {
     std::cout << transaction.toString() << std::endl;
 
     std::cout << std::endl << "FINISHED" << std::endl;
+
+
+
+    std::cout << std::endl << "Path: " << std::filesystem::current_path() <<std::endl;
     return 0;
 }

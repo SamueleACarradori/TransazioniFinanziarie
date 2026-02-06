@@ -29,10 +29,12 @@ TEST_F(FileManagerFixture, ConstructorCall) {
 TEST_F(FileManagerFixture, SaveLoadFile) {
 
     //these methods may have some problems at runtime so testing here is showing that they just work properly
-    // also I am using this to populate the file
-    ASSERT_TRUE(userFileManager.save(User("TEST1","PROVAID0")));
-    ASSERT_TRUE(userFileManager.save(User("TEST2","PROVAID1")));
-    ASSERT_TRUE(userFileManager.save(User("TEST3","PROVAID2")));
+    // also I am using this to populate the file.
+    // Made as expect_true because if the files are not deleted in the
+    // DeleteFile test they will produce an error
+    EXPECT_TRUE(userFileManager.save(User("TEST1","PROVAID0")));
+    EXPECT_TRUE(userFileManager.save(User("TEST2","PROVAID1")));
+    EXPECT_TRUE(userFileManager.save(User("TEST3","PROVAID2")));
 
     //Try saving already existing file
     ASSERT_FALSE(userFileManager.save(User("TEST3","PROVAID2")));
