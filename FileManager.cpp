@@ -144,7 +144,7 @@ std::string FileManager::getAbsolutePath(const bool doStandardPath) {
     */
 
     //could send runtime exceptions just as previous method
-    auto filePath = std::string( std::filesystem::current_path());
+    auto filePath = std::filesystem::current_path().string();
     if (filePath.empty()) {
         throw std::runtime_error("Unable to locate working directory.");
     }

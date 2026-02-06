@@ -69,8 +69,5 @@ int main () {
 
     std::cout << std::endl << "FINISHED" << std::endl;
 
-
-
-    std::cout << std::endl << "Path: " << std::filesystem::current_path() <<std::endl;
     return 0;
 }
