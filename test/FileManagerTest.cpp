@@ -58,7 +58,8 @@ TEST_F(FileManagerFixture, DeleteFile) {
     // non existent User
     ASSERT_FALSE(userFileManager.deleteLine(User("TEST1","PROVAID0")));
 
-    //again errors may come from std library at runtime
+    //delete all the generated files
+    //errors may come from std library at runtime
     ASSERT_TRUE(userFileManager.deleteFile());
 
     ASSERT_TRUE(FileManager("USER_TEST2.txt").deleteFile());
