@@ -21,5 +21,6 @@ A C++ application for managing checking account transactions with file-based per
 >```
 > git clone --single-branch --branch test (https://github.com/SamueleACarradori/TransazioniFinanziarie.git)
 >```
+
 > [!NOTE]\
 > This project is made for didactical purposes only.
