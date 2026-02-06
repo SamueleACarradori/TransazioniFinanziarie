@@ -8,6 +8,12 @@ A C++ application for managing checking account transactions with file-based per
 > git clone --recurse-submodules https://github.com/SamueleACarradori/TransazioniFinanziarie.git
 >```
 
+> [!TIP]
+> Alternatively clone the test branch for embedded googletest directory using:
+>```
+> git clone --single-branch --branch test (https://github.com/SamueleACarradori/TransazioniFinanziarie.git)
+>```
+
 ## 🏗️ Project Architecture
 + `User`    Represents a bank account user with personal information and account management capabilities
 + `CheckingAccount`     Manages the checking account balance and provides deposit/withdrawal functionality
