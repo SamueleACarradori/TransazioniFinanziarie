@@ -1,0 +1,6 @@
+# My personal .gitignore
+*.xml
+*.iml
+#Ignoring the DB since is just to do some local tests
+*.txt
+!CMakeLists.txt
