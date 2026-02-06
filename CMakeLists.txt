@@ -14,11 +14,6 @@ if(GIT_FOUND AND NOT EXISTS SUBMODULE_CHECK_FILE)
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             RESULT_VARIABLE GIT_SUBMOD_RESULT
     )
-    execute_process(
-            COMMAND git restore test/lib/googletest --recurse-submodules
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-            RESULT_VARIABLE GIT_SUBMOD_RESULT2
-    )
     if(NOT GIT_SUBMOD_RESULT EQUAL "0" OR NOT GIT_SUBMOD_RESULT2 EQUAL "0")
         message(WARNING "Git submodule update failed")
     endif()
