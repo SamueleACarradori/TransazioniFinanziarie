@@ -1,12 +1,12 @@
 #find_package(GTest REQUIRED)
 #include_directories(${GTEST_INCLUDE_DIRS})
 
-if (NOT EXISTS ./lib/googletest/googletest)
-
-
+if (EXISTS ./lib/googletest/googletest)
+    add_subdirectory(./lib/googletest)
+else ()
+    add_subdirectory(./lib/embedded/googletest)
 endif ()
 
-add_subdirectory(./lib/googletest)
 set(gtest_SOURCE_DIR ./lib/googletest/)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
