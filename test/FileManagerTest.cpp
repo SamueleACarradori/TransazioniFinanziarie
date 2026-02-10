@@ -59,7 +59,7 @@ TEST_F(FileManagerFixture, DeleteFile) {
     ASSERT_FALSE(userFileManager.deleteLine(User("TEST1","PROVAID0")));
 
     //delete all the generated files
-    //errors may come from std library at runtime
+    //errors may come from std library at runtime :(
     ASSERT_TRUE(userFileManager.deleteFile());
 
     ASSERT_TRUE(FileManager("USER_TEST2.txt").deleteFile());

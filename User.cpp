@@ -130,7 +130,11 @@ void User::init(const IFileConfig* obj) {
 
 void User::init(const int index, const std::string& attribute) {
     switch (index) {
-        case 0: id = attribute; break;
+        case 0:
+            if (attribute.empty() || attribute.length() != STANDARD_ID_LENGTH)
+                throw std::invalid_argument("Invalid ID length");
+            id = attribute;
+            break;
         case 1: username = attribute; break;
 
         default: throw std::out_of_range("Index out of range, no more initialization is possible.");
