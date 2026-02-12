@@ -23,13 +23,10 @@ public:
     // Default Constructor since no attributes
     IFileConfig() = default;
 
-    /*
-     * Copy Constructor
-    IFileConfig(const IFileConfig& obj) {
-        // calling init() this way should automatically call
-        // the function redefined inside the derived class
-        // also if init() is not redefined throws an exception
-        init(&obj);
+    /**
+    // String Constructor
+    explicit IFileConfig(const std::string& line) {
+        this->IFileConfig::loadFromString(line,';');
     }
     */
 
@@ -60,7 +57,9 @@ public:
     virtual bool loadFromString(const std::string& line) = 0;
 
     //check if two objects are equal
-    virtual bool isEqual(IFileConfig& obj) const = 0;
+    virtual bool isEqual(const IFileConfig& obj) const = 0;
+
+    virtual bool isEqual(const std::string& line) const = 0;
 
 protected:
 

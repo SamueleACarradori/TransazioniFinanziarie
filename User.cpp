@@ -117,11 +117,17 @@ bool User::loadFromString(const std::string &line) {
     }
 }
 
-bool User::isEqual(IFileConfig &obj) const {
+bool User::isEqual(const IFileConfig &obj) const {
     const auto user = dynamic_cast<const User&>(obj);
 
     //IDs could be equal since random function assigning ids is not perfect
     return id == user.getId() || username == user.getUsername();
+}
+
+bool User::isEqual(const std::string &line) const {
+    User user;
+    user.loadFromString(line);
+    return this->isEqual(user);
 }
 
 /*

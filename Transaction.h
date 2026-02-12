@@ -54,7 +54,9 @@ public:
 
     bool loadFromString(const std::string &line) override;
 
-    bool isEqual(IFileConfig &obj) const override;
+    bool isEqual(const IFileConfig &obj) const override;
+
+    bool isEqual(const std::string& line) const override;
 
 protected:
 

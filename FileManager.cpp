@@ -192,9 +192,8 @@ bool FileManager::isSaved(const IFileConfig &obj) const {
     bool found = false;
     std::string line;
 
-
     while (getline(file,line) && !found) {
-        if (line == obj.toString()) {
+        if (obj.isEqual(line)) {
             found = true;
         }
     }

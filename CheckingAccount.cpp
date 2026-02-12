@@ -57,10 +57,17 @@ bool CheckingAccount::loadFromString(const std::string &line) {
     }
 }
 
-bool CheckingAccount::isEqual(IFileConfig &obj) const {
+bool CheckingAccount::isEqual(const IFileConfig &obj) const {
     const auto account = dynamic_cast<const CheckingAccount&>(obj);
 
     return id == account.id && idUser == account.idUser;
+}
+
+bool CheckingAccount::isEqual(const std::string &line) const {
+    CheckingAccount checkingAccount;
+    checkingAccount.loadFromString(line);
+
+    return this->isEqual(checkingAccount);
 }
 
 void CheckingAccount::init(const int index, const std::string &attribute) {
@@ -74,8 +81,7 @@ void CheckingAccount::init(const int index, const std::string &attribute) {
 }
 
 bool operator==(const CheckingAccount &lhs, const CheckingAccount &rhs) {
-    return lhs.id == rhs.id
-               && lhs.idUser == rhs.idUser;
+    return lhs.isEqual(rhs);
 }
 
 bool operator!=(const CheckingAccount &lhs, const CheckingAccount &rhs) {

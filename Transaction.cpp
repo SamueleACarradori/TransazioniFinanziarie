@@ -79,13 +79,19 @@ bool Transaction::loadFromString(const std::string &line) {
     }
 }
 
-bool Transaction::isEqual(IFileConfig &obj) const {
+bool Transaction::isEqual(const IFileConfig &obj) const {
     const auto transaction = dynamic_cast<const Transaction&>(obj);
 
     //IDs could be equal since random function assigning ids is not perfect
     return idTransaction == transaction.idTransaction ||
         (idSenderAccount == transaction.idSenderAccount &&
             idReceiverAccount == transaction.idReceiverAccount);
+}
+
+bool Transaction::isEqual(const std::string &line) const {
+    Transaction transaction;
+    transaction.loadFromString(line);
+    return this->isEqual(transaction);
 }
 
 
