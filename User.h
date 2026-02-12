@@ -60,6 +60,8 @@ public:
 
     //void loadFromString(const std::string &line, const char delimiter) override;
 
+    bool isEqual(IFileConfig &obj) const override;
+
     ~User() override = default;
 
 protected:

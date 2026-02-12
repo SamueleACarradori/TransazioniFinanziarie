@@ -46,6 +46,7 @@ public:
     // Standard input for loading on .txt file
     bool loadFromString(const std::string &line) override;
 
+    bool isEqual(IFileConfig &obj) const override;
 
     ~CheckingAccount() override = default;
 

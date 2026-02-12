@@ -14,10 +14,12 @@
 
 
 FileManager::FileManager( std::string fileName, std::string filePath) : fileName(std::move(fileName)), filePath(std::move(filePath)) {
+    //controlls if filename ends with .txt
     if (!endsWith(this->fileName, ".txt")) {
-        throw std::invalid_argument("The name of the file must end with .txt");
+        this->fileName = this->fileName + ".txt";
     }
 
+    //controls if filepath is legit and if not it populates it
     if (this->filePath.empty()) {
         this->filePath = FileManager::getAbsolutePath();
         if (!endsWith(this->filePath,"/")) {
@@ -26,7 +28,7 @@ FileManager::FileManager( std::string fileName, std::string filePath) : fileName
         this->filePath = this->filePath + this->fileName;
     }
 
-    if(!fileExists()) {
+    if(!fileExists(this->filePath)) {
         //using ofstream for output file operations.
         std::ofstream file;
         file.open(this->filePath);
@@ -46,9 +48,6 @@ bool FileManager::fileExists(const std::string& filePath) {
     return isOpen;
 }
 
-bool FileManager::fileExists() const{
-    return fileExists(this->filePath);
-}
 
 bool FileManager::deleteFile() const{
     // Returns 0 on success, non-zero on error
@@ -134,7 +133,9 @@ bool FileManager::deleteLine(const IFileConfig &obj) const {
 
 std::string FileManager::getAbsolutePath(const bool doStandardPath) {
 
-    /* deprecated way of finding path because it is linux specific
+    /**
+
+    //deprecated way of finding path because it is linux specific
 
     char cwd[1024];
     if (getcwd(cwd, sizeof(cwd)) == nullptr) {
@@ -149,15 +150,22 @@ std::string FileManager::getAbsolutePath(const bool doStandardPath) {
         throw std::runtime_error("Unable to locate working directory.");
     }
 
-    //fix cmake-build-debug removing it from the filepath
+    //standardize the path
     if (doStandardPath) {
+
+        //fix the "cmake-build-debug" problem removing it from the filepath
         const std::string stringToRemove = "cmake-build-debug";
         if (const auto start_position_to_erase = filePath.find(stringToRemove); start_position_to_erase != std::string::npos) {
             filePath = filePath.erase(start_position_to_erase, filePath.length()-stringToRemove.length());
         }
+
+        //now adds the directory where we will save all the stuff
+        if (!endsWith(filePath,"/"))
+            filePath = filePath + "/";
+
         filePath = filePath + "database/";
 
-        //create database dir if it doesnt exits.
+        //create database dir if it doesnt exits
         if (!std::filesystem::exists(filePath))
             std::filesystem::create_directory(filePath);
     }
@@ -174,11 +182,17 @@ bool FileManager::isSaved(const IFileConfig &obj) const {
 
     std::ifstream file(filePath, std::ios::in);
     if (!file.is_open()) {
-        throw std::runtime_error("Could not open file "+filePath+".");
+        throw std::runtime_error("Could not open file "+filePath+" .");
     }
 
+    //checks if one of the lines is equal
+    //better check would be to check only id etc...
+    // or overload ==operator and make the check this way
+    // for the purpuse of this project we will just check if the lines are equal
     bool found = false;
     std::string line;
+
+
     while (getline(file,line) && !found) {
         if (line == obj.toString()) {
             found = true;

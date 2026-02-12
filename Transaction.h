@@ -54,6 +54,8 @@ public:
 
     bool loadFromString(const std::string &line) override;
 
+    bool isEqual(IFileConfig &obj) const override;
+
 protected:
 
     void init(int index,const std::string& attribute) override;

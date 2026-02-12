@@ -59,6 +59,9 @@ public:
      */
     virtual bool loadFromString(const std::string& line) = 0;
 
+    //check if two objects are equal
+    virtual bool isEqual(IFileConfig& obj) const = 0;
+
 protected:
 
     /*This method is protected because the scope of this class is to create a framework

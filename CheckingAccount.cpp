@@ -57,6 +57,12 @@ bool CheckingAccount::loadFromString(const std::string &line) {
     }
 }
 
+bool CheckingAccount::isEqual(IFileConfig &obj) const {
+    const auto account = dynamic_cast<const CheckingAccount&>(obj);
+
+    return id == account.id && idUser == account.idUser;
+}
+
 void CheckingAccount::init(const int index, const std::string &attribute) {
     switch (index) {
         case 0: id = attribute; break;

@@ -117,6 +117,13 @@ bool User::loadFromString(const std::string &line) {
     }
 }
 
+bool User::isEqual(IFileConfig &obj) const {
+    const auto user = dynamic_cast<const User&>(obj);
+
+    //IDs could be equal since random function assigning ids is not perfect
+    return id == user.getId() || username == user.getUsername();
+}
+
 /*
 void User::init(const IFileConfig* obj) {
     // dynamic cast the parent class to the child class
