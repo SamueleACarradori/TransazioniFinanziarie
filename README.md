@@ -9,7 +9,7 @@ A C++ application for managing checking account transactions with file-based per
 >```
 
 ## 🏗️ Project Architecture
-+ `User`    Represents a bank account user with personal information and account management capabilities
++ `User`    Represents a bank account user with personal information and multiple account management capabilities
 + `CheckingAccount`     Manages the checking account balance and provides deposit/withdrawal functionality
 + `Transaction` 	Represents individual financial transactions between account holders with amounts and timestamp
 + `Date`	Utility class for handling date operations and formatting across the application
@@ -17,10 +17,10 @@ A C++ application for managing checking account transactions with file-based per
 + `IFileConfig`  Interface created for the explicit purpose of giving a common implementation for classes that want to save/loading from file. 
 
 > [!TIP]
-> Alternatively clone the test branch for embedded googletest directory using:
+> You can clone the test branch for embedded googletest directory using:
 >```
 > git clone --single-branch --branch test https://github.com/SamueleACarradori/TransazioniFinanziarie.git
 >```
 
 >[!NOTE]\
-> This project is made for didactical purposes only.
+> This project is made for didactical purposes only!
