@@ -90,7 +90,8 @@ bool Transaction::isEqual(const IFileConfig &obj) const {
 
 bool Transaction::isEqual(const std::string &line) const {
     Transaction transaction;
-    transaction.loadFromString(line);
+    if (!transaction.loadFromString(line))
+        throw  std::invalid_argument("Invalid input for user: ' "+line+" '");
     return this->isEqual(transaction);
 }
 

@@ -126,7 +126,9 @@ bool User::isEqual(const IFileConfig &obj) const {
 
 bool User::isEqual(const std::string &line) const {
     User user;
-    user.loadFromString(line);
+    if (!user.loadFromString(line))
+        throw  std::invalid_argument("Invalid input for user: ' "+line+" '");
+
     return this->isEqual(user);
 }
 

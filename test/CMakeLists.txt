@@ -13,7 +13,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 set(SOURCE_TEST_FILES runAllTests.cpp
         UserTest.cpp
         CheckingAccountTest.cpp
-        TransactionTest.cpp
+        TransactionFixture.cpp
         FileManagerTest.cpp
         DateTest.cpp)
 

@@ -27,15 +27,15 @@ public:
 
     //getters
 
-    std::string getIdSenderAccount() const;
+    [[nodiscard]] std::string getIdSenderAccount() const;
 
-    std::string getIdReceiverAccount() const;
+    [[nodiscard]] std::string getIdReceiverAccount() const;
 
-    std::string getIdTransaction() const;
+    [[nodiscard]] std::string getIdTransaction() const;
 
-    std::string getComment() const;
+    [[nodiscard]] std::string getComment() const;
 
-    float getAmount() const;
+    [[nodiscard]] float getAmount() const;
 
 
     //setters
@@ -54,9 +54,9 @@ public:
 
     bool loadFromString(const std::string &line) override;
 
-    bool isEqual(const IFileConfig &obj) const override;
+    [[nodiscard]] bool isEqual(const IFileConfig &obj) const override;
 
-    bool isEqual(const std::string& line) const override;
+    [[nodiscard]] bool isEqual(const std::string& line) const override;
 
 protected:
 

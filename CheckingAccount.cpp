@@ -59,25 +59,15 @@ bool CheckingAccount::loadFromString(const std::string &line) {
 
 bool CheckingAccount::isEqual(const IFileConfig &obj) const {
     const auto account = dynamic_cast<const CheckingAccount&>(obj);
-
     return id == account.id && idUser == account.idUser;
 }
 
 bool CheckingAccount::isEqual(const std::string &line) const {
     CheckingAccount checkingAccount;
-    checkingAccount.loadFromString(line);
+    if (!checkingAccount.loadFromString(line))
+        throw  std::invalid_argument("Invalid input for user: ' "+line+" '");
 
     return this->isEqual(checkingAccount);
-}
-
-void CheckingAccount::init(const int index, const std::string &attribute) {
-    switch (index) {
-        case 0: id = attribute; break;
-        case 1: idUser = attribute; break;
-        case 2: balance = std::stof(attribute); break;
-            //space to add more
-        default: throw std::out_of_range("Index out of range, no more initialization is possible.") ;
-    }
 }
 
 bool operator==(const CheckingAccount &lhs, const CheckingAccount &rhs) {
@@ -86,4 +76,14 @@ bool operator==(const CheckingAccount &lhs, const CheckingAccount &rhs) {
 
 bool operator!=(const CheckingAccount &lhs, const CheckingAccount &rhs) {
     return !(lhs == rhs);
+}
+
+void CheckingAccount::init(const int index, const std::string &attribute) {
+    switch (index) {
+        case 0: id = attribute; break;
+        case 1: idUser = attribute; break;
+        case 2: balance = std::stof(attribute); break;
+        //space to add more
+        default: throw std::out_of_range("Index out of range, no more initialization is possible.") ;
+    }
 }

@@ -24,13 +24,13 @@ public:
 
 
     // getters
-    std::string getUsername() const;
+    [[nodiscard]] std::string getUsername() const;
 
-    std::string getId() const;
+    [[nodiscard]] std::string getId() const;
 
-    std::vector<CheckingAccount> getAccount();
+    [[nodiscard]] std::vector<CheckingAccount> getAccount();
 
-    CheckingAccount getAccount(const std::string& idAccount);
+    [[nodiscard]] CheckingAccount getAccount(const std::string& idAccount);
 
     //generate account on the spot giving the initial balance
     void addAccount(float balance);
@@ -53,16 +53,16 @@ public:
 
 
     // Standard output for saving on .txt file
-    std::string toString() const override;
+    [[nodiscard]] std::string toString() const override;
 
     // Standard input method for loading .txt file
     bool loadFromString(const std::string &line) override;
 
     //void loadFromString(const std::string &line, const char delimiter) override;
 
-    bool isEqual(const IFileConfig &obj) const override;
+    [[nodiscard]] bool isEqual(const IFileConfig &obj) const override;
 
-    bool isEqual(const std::string& line) const override;
+    [[nodiscard]] bool isEqual(const std::string& line) const override;
 
     ~User() override = default;
 

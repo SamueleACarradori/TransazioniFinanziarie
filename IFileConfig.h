@@ -23,13 +23,6 @@ public:
     // Default Constructor since no attributes
     IFileConfig() = default;
 
-    /**
-    // String Constructor
-    explicit IFileConfig(const std::string& line) {
-        this->IFileConfig::loadFromString(line,';');
-    }
-    */
-
     // Provide destructor default implementation
     virtual ~IFileConfig() = default;
 
@@ -57,9 +50,10 @@ public:
     virtual bool loadFromString(const std::string& line) = 0;
 
     //check if two objects are equal
-    virtual bool isEqual(const IFileConfig& obj) const = 0;
+    [[nodiscard]] virtual bool isEqual(const IFileConfig& obj) const = 0;
 
-    virtual bool isEqual(const std::string& line) const = 0;
+    //check if line to
+    [[nodiscard]] virtual bool isEqual(const std::string& line) const = 0;
 
 protected:
 
@@ -68,62 +62,61 @@ protected:
      *so we do not want anyone but the class to define the delimiter
      *this class has the purpose to solve the general problem of loading while
      *the actual call is made from the public twin method */
-    virtual void loadFromString(const std::string& line, const char delimiter) {
-        std::stringstream ss(line);
-        std::string split;
+    virtual void loadFromString(const std::string& line, char delimiter);
 
-        short i = 0;
-        while (getline(ss, split, delimiter)) {
-            //uses the redefined method in each child class
-            init(i,split);
-            i++;
-        }
-    }
-
-    /*Init is defined here so that all subclasses have it for Copy Constructor
-     *to fix the inheritance problem the IFileConfig method just throws an exception
-     *when called ensuring that the right call at runtime is made
-    virtual void init(const IFileConfig* obj) {
-        // throw exception
-    };
-    */
 
     //Initialize specific child object during loadFromString()
     virtual void init(int index, const std::string& attribute) = 0;
 
 
     // Just an overkill method for solving a basic random string gen problem
-    static std::string generateRandomString(const int length = STANDARD_ID_LENGTH, const bool specialChar = false) {
-        std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        if (specialChar)
-            characters = characters + "!@#$%^&*-+";
-
-        // Generating true random using entropy on the system. Could be slow and expensive so we made it static
-        static std::random_device random_device;
-
-        /*
-         * Mersenne Twister pseudo-random number generator, 19937 = period length (2¹⁹⁹³⁷ - 1)
-         * We seed it with a true random number to get a more pure-random-like result
-         */
-        std::mt19937 generator(random_device());
-
-        // Produces random integers uniformly distributed across a range
-        std::uniform_int_distribution<> distribution(0, characters.size() - 1);
-
-        // Generating the actual string
-        std::string random_string;
-        random_string.reserve(length); //optimization pre allocating
-
-        /**
-         * distribution(generator) generates a random index (int type)
-         * Then we select from the characters the one with the correspondent index
-         * and we put it inside result string
-        */
-        for (size_t i = 0; i < length; ++i) {
-            random_string += characters[distribution(generator)];
-        }
-
-        return random_string;
-    }
+    static std::string generateRandomString(int length = STANDARD_ID_LENGTH, bool specialChar = false);
 };
+
+inline void IFileConfig::loadFromString(const std::string &line, const char delimiter) {
+    std::stringstream ss(line);
+    std::string split;
+
+    short i = 0;
+    while (getline(ss, split, delimiter)) {
+        //uses the redefined method in each child class
+        init(i,split);
+        i++;
+    }
+}
+
+inline std::string IFileConfig::generateRandomString(const int length , const bool specialChar) {
+    std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    if (specialChar)
+        characters = characters + "!@#$%^&*-+";
+
+    // Generating true random using entropy on the system. Could be slow and expensive so we made it static
+    static std::random_device random_device;
+
+    /*
+     * Mersenne Twister pseudo-random number generator, 19937 = period length (2¹⁹⁹³⁷ - 1)
+     * We seed it with a true random number to get a more pure-random-like result
+     */
+    std::mt19937 generator(random_device());
+
+    // Produces random integers uniformly distributed across a range
+    std::uniform_int_distribution<> distribution(0, characters.size() - 1);
+
+    // Generating the actual string
+    std::string random_string;
+    random_string.reserve(length); //optimization pre allocating
+
+    /**
+     * distribution(generator) generates a random index (int type)
+     * Then we select from the characters the one with the correspondent index
+     * and we put it inside result string
+    */
+    for (size_t i = 0; i < length; ++i) {
+        random_string += characters[distribution(generator)];
+    }
+
+    return random_string;
+}
+
+
 #endif //TRANSAZIONIFINANZIARIE_IFILECONFIG_H
