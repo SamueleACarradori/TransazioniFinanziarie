@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
     // Returns 0 if everything is ok
-    // return 1 otherwise
+    // return 1 if errors occur
     return RUN_ALL_TESTS();
 }
 
