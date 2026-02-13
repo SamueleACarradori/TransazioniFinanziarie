@@ -15,6 +15,8 @@ CheckingAccount::CheckingAccount(const std::string &line) {
 }
 
 CheckingAccount::CheckingAccount(const float balance, std::string  idUser,std::string  id) : balance(balance), id(std::move(id)), idUser(std::move(idUser)) {
+    //checks if id was left empty and populates it
+    //else look for irregularities
     if (this->id.empty()) {
         this->id = IFileConfig::generateRandomString();
     }else if(this->id.length() != STANDARD_ID_LENGTH) {
@@ -38,6 +40,10 @@ std::string CheckingAccount::getAccountId() const {
     return id;
 }
 
+std::string CheckingAccount::getUserId() const {
+    return idUser;
+}
+
 float CheckingAccount::getBalance() const {
     return balance;
 }
@@ -51,8 +57,11 @@ bool CheckingAccount::loadFromString(const std::string &line) {
         IFileConfig::loadFromString(line,';');
         return true;
     }catch  (std::out_of_range &e) {
+        //sends this error when init function fails to initialize all
+        //or if it fails to convert string to float
         return false;
     }catch (std::invalid_argument &e) {
+        //sends this exception when id length is not correct
         return false;
     }
 }
@@ -65,7 +74,7 @@ bool CheckingAccount::isEqual(const IFileConfig &obj) const {
 bool CheckingAccount::isEqual(const std::string &line) const {
     CheckingAccount checkingAccount;
     if (!checkingAccount.loadFromString(line))
-        throw  std::invalid_argument("Invalid input for user: ' "+line+" '");
+        throw  std::invalid_argument("Invalid input for account: ' "+line+" '");
 
     return this->isEqual(checkingAccount);
 }
@@ -78,6 +87,7 @@ bool operator!=(const CheckingAccount &lhs, const CheckingAccount &rhs) {
     return !(lhs == rhs);
 }
 
+//could throw a conversion exception
 void CheckingAccount::init(const int index, const std::string &attribute) {
     switch (index) {
         case 0: id = attribute; break;

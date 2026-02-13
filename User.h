@@ -18,7 +18,6 @@ public:
     //Default constructor used to create empty obj for loading purposes
     User() = default;
 
-
     // Constructor by value
     explicit User(std::string username, std::string id = "",const std::vector<CheckingAccount> &accounts = {});
 
@@ -28,9 +27,10 @@ public:
 
     [[nodiscard]] std::string getId() const;
 
-    [[nodiscard]] std::vector<CheckingAccount> getAccount();
+    [[nodiscard]] std::vector<CheckingAccount> getAccounts();
 
     [[nodiscard]] CheckingAccount getAccount(const std::string& idAccount);
+
 
     //generate account on the spot giving the initial balance
     void addAccount(float balance);
@@ -41,12 +41,14 @@ public:
     // load account from string ad uses addAccount(account) for checking id already exists
     void addAccount(const std::string& line, const std::string &idAccount);
 
-    //add account balance
+    // account balance management by id
+    // I choose to implement only by id since it's the user class
+    // that handles these kind of stuff and the only unique identifier is the idAccount
     bool addAccountBalance(const std::string& idAccount, float amount);
 
     bool subtractAccountBalance(const std::string &idAccount, float amount);
 
-    //delete account
+    //delete account by id or by obj
     bool deleteAccount(const std::string& idAccount);
 
     bool deleteAccount(const CheckingAccount& account);
@@ -58,8 +60,6 @@ public:
     // Standard input method for loading .txt file
     bool loadFromString(const std::string &line) override;
 
-    //void loadFromString(const std::string &line, const char delimiter) override;
-
     [[nodiscard]] bool isEqual(const IFileConfig &obj) const override;
 
     [[nodiscard]] bool isEqual(const std::string& line) const override;
@@ -67,12 +67,6 @@ public:
     ~User() override = default;
 
 protected:
-    // Constructor only used to initialize obj inside
-    // the other constructors and hidden for user use.
-    //User() = default;
-
-    // Method created for complying with the 'request' for some constructors for a deep copy
-    //void init(const IFileConfig* obj) override;
 
     //initialize object during string loading
     void init(int index, const std::string& attribute) override;

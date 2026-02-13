@@ -25,15 +25,22 @@ int main () {
     auto pippo = User("Pippo","provaID0");
     auto franco = User("Franco");
 
+    auto account = CheckingAccount(2213.45,franco.getId());
+
     //Initialize accounts
     pippo.addAccount(20.23);
     pippo.addAccount(240.23);
     franco.addAccount(11290.23);
+    franco.addAccount(1234.23);
+
+    //managing account by user
+    franco.addAccount(account);
+
 
     //try transactions
-    auto transaction1 = Transaction(pippo.getAccount()[0],franco.getAccount()[0],20,"Prova 1");
-    auto transaction2 = Transaction(pippo.getAccount()[1],franco.getAccount()[0],123.49,"Prova 2");
-    auto transaction3 = Transaction(franco.getAccount()[0],pippo.getAccount()[0],5367.93,"Prova 3");
+    auto transaction1 = Transaction(pippo.getAccounts()[0],franco.getAccounts()[0],20,"Prova 1");
+    auto transaction2 = Transaction(pippo.getAccounts()[1],franco.getAccounts()[0],123.49,"Prova 2");
+    auto transaction3 = Transaction(franco.getAccounts()[0],pippo.getAccounts()[0],5367.93,"Prova 3");
 
     //try FileManger
     auto userFile = FileManager("user.txt");
@@ -44,10 +51,10 @@ int main () {
     userFile.save(pippo);
     userFile.save(franco);
 
-    for (CheckingAccount &i : pippo.getAccount()) {
+    for (CheckingAccount &i : pippo.getAccounts()) {
         checkingFile.save(i);
     }
-    for (CheckingAccount &i : franco.getAccount()) {
+    for (CheckingAccount &i : franco.getAccounts()) {
         checkingFile.save(i);
     }
 
@@ -59,7 +66,7 @@ int main () {
     User user;
     bool attr = userFile.load(user,"provaID");
     CheckingAccount checking;
-    attr = checkingFile.load(checking,pippo.getAccount()[0].getAccountId());
+    attr = checkingFile.load(checking,pippo.getAccounts()[0].getAccountId());
     Transaction transaction;
     attr = transactionFile.load(transaction,transaction1.getIdTransaction());
 

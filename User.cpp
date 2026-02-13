@@ -15,6 +15,9 @@ User::User(std::string username, std::string  id, const std::vector<CheckingAcco
     id(std::move(id)),
     username(std::move(username)),
     accounts(accounts) {
+
+    //checks if id was left empty and populates it
+    //else look for irregularities
     if (this->id.empty()) {
         this->id = IFileConfig::generateRandomString();
     }else if(this->id.length() != STANDARD_ID_LENGTH) {
@@ -30,7 +33,7 @@ std::string User::getId() const {
     return id;
 }
 
-std::vector<CheckingAccount> User::getAccount() {
+std::vector<CheckingAccount> User::getAccounts() {
     return accounts;
 }
 
@@ -41,31 +44,43 @@ CheckingAccount User::getAccount(const std::string& idAccount) {
     return accounts[i];
 }
 
+//does not look if there is already one because if created
+//only by balance means id (and eventually other attributes) are generated
+//on the spot by the constructor
 void User::addAccount(const float balance) {
     User::addAccount(CheckingAccount(balance,id));
 }
 
+//I have made my personal exceptions because why not :)
 void User::addAccount(const CheckingAccount& account) {
+    //checks if account belongs to user
+    if (account.getUserId() != id)
+        throw std::invalid_argument("Account does not match user ID.");
+
+    //checks if already present
     for(CheckingAccount& currentAccount: accounts) {
         if (currentAccount == account)
             throw account_already_exists_error();
     }
+
     accounts.push_back(account);
 }
 
 void User::addAccount(const std::string& line, const std::string &idAccount) {
     // purposefully letting the exception propagate since at this stage
     // it means that the function was called with improper values
-    auto account = CheckingAccount(line);
+    const auto account = CheckingAccount(line);
     User::addAccount(account);
 }
 
 bool User::deleteAccount(const std::string &idAccount) {
     bool deleted = true;
     try {
+        //if not found sends exception
         const short index = User::findAccountIndexById(idAccount);
-        accounts.erase(accounts.begin()+index); // essendo un iterator sommo il mio index
-    }catch (std::exception &e) {
+        // being iterator, I'm adding the index
+        accounts.erase(accounts.begin()+index);
+    }catch (account_dont_exists_error &e) {
         deleted = false;
     }
     return deleted;
@@ -75,10 +90,12 @@ bool User::deleteAccount(const CheckingAccount& account) {
     return deleteAccount(account.getAccountId());
 }
 
-bool User::addAccountBalance(const std::string &idAccount, float amount) {
+bool User::addAccountBalance(const std::string &idAccount, const float amount) {
     bool success = true;
     try {
+        //if not found sends exception
         const short i = User::findAccountIndexById(idAccount);
+        //also if amount is not correct send another exception
         accounts[i].addBalance(amount);
     }catch (account_dont_exists_error &e) {
         success = false;
@@ -91,7 +108,9 @@ bool User::addAccountBalance(const std::string &idAccount, float amount) {
 bool User::subtractAccountBalance(const std::string& idAccount, const float amount) {
     bool success = true;
     try {
+        //if not found sends exception
         const short i = User::findAccountIndexById(idAccount);
+        //also if amount is not correct send another exception
         accounts[i].subtractBalance(amount);
     }catch (account_dont_exists_error &e) {
         success = false;
@@ -111,8 +130,10 @@ bool User::loadFromString(const std::string &line) {
         IFileConfig::loadFromString(line,';');
         return true;
     }catch  (std::out_of_range &e) {
+        //sends this error when init function fails to initialize all
         return false;
     }catch (std::invalid_argument &e) {
+        //sends this exception when id length is not correct
         return false;
     }
 }
@@ -120,8 +141,9 @@ bool User::loadFromString(const std::string &line) {
 bool User::isEqual(const IFileConfig &obj) const {
     const auto user = dynamic_cast<const User&>(obj);
 
-    //IDs could be equal since random function assigning ids is not perfect
-    return id == user.getId() || username == user.getUsername();
+    //IDs could be equal since random function assigning ids is not perfect but
+    //for the purpose of this exercise we leave it at that
+    return id == user.getId() && username == user.getUsername();
 }
 
 bool User::isEqual(const std::string &line) const {
@@ -132,17 +154,6 @@ bool User::isEqual(const std::string &line) const {
     return this->isEqual(user);
 }
 
-/*
-void User::init(const IFileConfig* obj) {
-    // dynamic cast the parent class to the child class
-    const auto user = dynamic_cast<const User*>(obj);
-
-    id = user->id;
-    username = user->username;
-    accounts = user->accounts;
-}
-*/
-
 void User::init(const int index, const std::string& attribute) {
     switch (index) {
         case 0:
@@ -152,6 +163,7 @@ void User::init(const int index, const std::string& attribute) {
             break;
         case 1: username = attribute; break;
 
+        //default triggers an error since the format of the saving files is standardized
         default: throw std::out_of_range("Index out of range, no more initialization is possible.");
     }
 }

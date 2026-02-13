@@ -28,8 +28,10 @@ Date::Date(const std::string& date) {
     // Create a string stream to parse the date string
     std::istringstream ss(date);
 
+    // !!!ATTENTION!!!
     // Even if this piece of code gives error
     // it works, I don't know if it is my IDE the problem
+    // >> operator should extract formatted data
     ss >> std::get_time(&tm, DATE_HOUR_FORMAT);
 
     //If the std::tm object was obtained from std::get_time or the POSIX strptime,
@@ -38,7 +40,7 @@ Date::Date(const std::string& date) {
 
     // also check if parsing was successful
     if (ss.fail() || std::mktime(&tm) == -1) {
-        throw std::invalid_argument("Invalid date");
+        throw std::invalid_argument("Invalid date '" + date + "'");
     }
 
     //If the std::tm object was obtained from std::get_time or the POSIX strptime,
@@ -75,9 +77,9 @@ unsigned short Date::getSeconds() const {
 }
 
 std::string Date::toString() const {
-    std::array<char, 80> buffer;
+    std::array<char, 80> buffer{};
     std::strftime(buffer.data(), buffer.size(), DATE_HOUR_FORMAT, &date);
-    return std::string(buffer.data()) + ";";
+    return buffer.data();
 }
 
 bool Date::isLeapYear() const {

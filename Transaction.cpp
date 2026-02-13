@@ -18,6 +18,7 @@ Transaction::Transaction(CheckingAccount &sender, CheckingAccount &receiver, con
     std::string comment,const std::string& id_transaction) :
     Transaction(sender.getAccountId(),receiver.getAccountId(),amount,std::move(comment),id_transaction){
 
+    //does the subtraction at constructor level ONCE
     sender.subtractBalance(amount);
     receiver.addBalance(amount);
 }
@@ -65,7 +66,7 @@ void Transaction::setComment(const std::string &comment) {
 }
 
 std::string Transaction::toString() const {
-    return idTransaction+";"+idSenderAccount+";"+idReceiverAccount+";"+std::to_string(amount)+";"+comment+";"+date.toString();
+    return idTransaction+";"+idSenderAccount+";"+idReceiverAccount+";"+std::to_string(amount)+";"+comment+";"+date.toString()+";";
 }
 
 bool Transaction::loadFromString(const std::string &line) {
@@ -73,8 +74,10 @@ bool Transaction::loadFromString(const std::string &line) {
         IFileConfig::loadFromString(line,';');
         return true;
     }catch  (std::out_of_range &e) {
+        //sends this error when init function fails to initialize all
         return false;
     }catch (std::invalid_argument &e) {
+        //sends this exception when id length is not correct
         return false;
     }
 }

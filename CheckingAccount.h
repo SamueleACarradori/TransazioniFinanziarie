@@ -30,12 +30,15 @@ public:
     //Construct by values, balance < 0 is ok since exists accounts in debt or 'in red'
     CheckingAccount(float balance,std::string  idUser,std::string  id="");
 
+    //account balance management
     void addBalance(float change);
 
     void subtractBalance(float change);
 
     //getters
     [[nodiscard]] std::string getAccountId() const;
+
+    [[nodiscard]] std::string getUserId() const;
 
     [[nodiscard]] float getBalance() const;
 
@@ -52,7 +55,9 @@ public:
 
     ~CheckingAccount() override = default;
 
-
+    // implemented as a way to make the code more readable
+    // also the fact that specify child class utilization allows to
+    // use isEqual() without the risc of bad_cast exception
     friend bool operator==(const CheckingAccount &lhs, const CheckingAccount &rhs);
 
     friend bool operator!=(const CheckingAccount &lhs, const CheckingAccount &rhs);

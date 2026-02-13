@@ -33,6 +33,9 @@ TEST_F(UserFixture, AccountManagment) {
     // account already exists
     ASSERT_THROW(user.addAccount(first),account_already_exists_error);
 
+    // account does not match user
+    ASSERT_THROW(user.addAccount(CheckingAccount()),std::invalid_argument);
+
     //argument is invalid
     ASSERT_THROW(user.addAccount("3hJOyC9M;"+user.getId()+";invalid value;11290.230469;","3hJOyC9M"),std::invalid_argument);
 }

@@ -21,7 +21,7 @@ public:
         float amount, std::string comment = "",const std::string& id_transaction="");
 
     //this constructor could be made protected in order to avoid a security gap of
-    //phantom transaction never occurred inside the actual checking account
+    //'phantom' transaction never occurred inside the actual checking account
     Transaction(std::string id_sender_account, std::string id_receiver_account,
         float amount, std::string comment = "",std::string id_transaction="");
 
@@ -63,7 +63,7 @@ protected:
     void init(int index,const std::string& attribute) override;
 
 private:
-    // standard length is 16 since there are far more transactions than anything else
+    // standard length is 16 since there should be far more transactions than anything else
     std::string idTransaction;
 
     std::string idSenderAccount;

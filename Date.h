@@ -27,8 +27,7 @@ public:
     unsigned short getMinutes() const;
     unsigned short getSeconds() const;
 
-    //format: day/month/year-hour:minute:second
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 
     bool isLeapYear() const;
 
