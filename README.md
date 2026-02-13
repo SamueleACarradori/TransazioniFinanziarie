@@ -17,9 +17,9 @@ A C++ application for managing checking account transactions with file-based per
 + `IFileConfig`  Interface created for the explicit purpose of giving a common implementation for classes that want to save/loading from file. 
 
 > [!TIP]
-> You can clone the test branch for embedded googletest directory using:
+> You can clone the 'embedded' branch for embedded googletest directory using:
 >```
-> git clone --single-branch --branch test https://github.com/SamueleACarradori/TransazioniFinanziarie.git
+> git clone --single-branch --branch embedded https://github.com/SamueleACarradori/TransazioniFinanziarie.git
 >```
 
 >[!NOTE]\
