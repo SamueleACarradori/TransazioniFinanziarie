@@ -61,6 +61,10 @@ float Transaction::getAmount() const {
     return amount;
 }
 
+Date Transaction::getDate() const {
+    return date;
+}
+
 void Transaction::setComment(const std::string &comment) {
     this->comment = comment;
 }

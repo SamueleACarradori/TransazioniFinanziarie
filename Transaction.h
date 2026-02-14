@@ -27,15 +27,19 @@ public:
 
     //getters
 
-    [[nodiscard]] std::string getIdSenderAccount() const;
+    std::string getIdSenderAccount() const;
 
-    [[nodiscard]] std::string getIdReceiverAccount() const;
+    std::string getIdReceiverAccount() const;
 
-    [[nodiscard]] std::string getIdTransaction() const;
+    std::string getIdTransaction() const;
 
-    [[nodiscard]] std::string getComment() const;
+    std::string getComment() const;
 
-    [[nodiscard]] float getAmount() const;
+    float getAmount() const;
+
+    Date getDate() const;
+
+
 
 
     //setters

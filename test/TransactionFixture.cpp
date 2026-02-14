@@ -55,22 +55,22 @@ TEST_F(TransactionFixture, LoadFromString) {
 }
 
 TEST_F(TransactionFixture, ComparisonMethods) {
-    //users are equal
+    //transactions are equal
     ASSERT_TRUE(transaction.isEqual(transaction));
 
-    //users are not equal
+    //transactions are not equal
     ASSERT_FALSE(transaction.isEqual(Transaction("EGPLbEI0BBvC4Qi4;K7dOYRf4;5xRqvIl4;123.489998;Prova 2;12/04/2026-22:16:10;")));
 
-    //throws bad cast exception
+    //transaction is not comparable to user class
     ASSERT_THROW(transaction.isEqual(User()),std::bad_cast);
 
-    //users are equal
+    //transaction is equal to string transaction
     ASSERT_TRUE(transaction.isEqual(transaction.toString()));
 
-    //users are not equal
+    //transactions are not equal to string
     ASSERT_FALSE(transaction.isEqual("EGPLbEI0BBvC4Qi4;K7dOYRf4;5xRqvIl4;123.489998;Prova 2;12/03/2026-22:16:10;"));
 
-    //everything correct except for final invalid argument
+    //invalid argument in string transaction
     ASSERT_THROW(transaction.isEqual("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid argument;5367.930176;Prova 3;03/09/2026-01:36:28"),std::invalid_argument);
 
 }
