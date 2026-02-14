@@ -22,13 +22,13 @@ protected:
 
 TEST_F(TransactionFixture, ConstructorCall) {
     //Correctly construct obj
-    ASSERT_NO_THROW(Transaction("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;5367.930176;Prova 3;03/02/2026-01:36:28"));
+    ASSERT_NO_THROW(Transaction("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;5367.930176;Prova 3;03/01/2024-01:36:28"));
 
     //One too many arguments
-    ASSERT_THROW(Transaction("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;5367.930176;Prova 3;03/02/2026-01:36:28;invalid argument;"),std::invalid_argument);
+    ASSERT_THROW(Transaction("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;5367.930176;Prova 3;03/01/2026-01:36:28;invalid argument;"),std::invalid_argument);
 
     //invalid type during convertion
-    ASSERT_THROW(Transaction("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid value;Prova 3;03/02/2026-01:36:28"),std::invalid_argument);
+    ASSERT_THROW(Transaction("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid value;Prova 3;03/01/2026-01:36:28"),std::invalid_argument);
 
 
     //Correctly construct obj
@@ -44,13 +44,13 @@ TEST_F(TransactionFixture, ConstructorCall) {
 
 TEST_F(TransactionFixture, LoadFromString) {
     //correctly loads transaction
-    ASSERT_TRUE(transaction.loadFromString("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;5367.930176;Prova 3;03/02/2026-01:36:28"));
+    ASSERT_TRUE(transaction.loadFromString("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;5367.930176;Prova 3;03/06/2026-01:36:28"));
 
     //One too many arguments
-    ASSERT_FALSE(transaction.loadFromString("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid argument;5367.930176;Prova 3;03/02/2026-01:36:28"));
+    ASSERT_FALSE(transaction.loadFromString("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid argument;5367.930176;Prova 3;03/07/2026-01:36:28"));
 
     //invalid type during convertion
-    ASSERT_FALSE(transaction.loadFromString("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid value;Prova 3;03/02/2026-01:36:28"));
+    ASSERT_FALSE(transaction.loadFromString("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid value;Prova 3;03/05/2026-01:36:28"));
 
 }
 
@@ -59,7 +59,7 @@ TEST_F(TransactionFixture, ComparisonMethods) {
     ASSERT_TRUE(transaction.isEqual(transaction));
 
     //users are not equal
-    ASSERT_FALSE(transaction.isEqual(Transaction("EGPLbEI0BBvC4Qi4;K7dOYRf4;5xRqvIl4;123.489998;Prova 2;12/02/2026-22:16:10;")));
+    ASSERT_FALSE(transaction.isEqual(Transaction("EGPLbEI0BBvC4Qi4;K7dOYRf4;5xRqvIl4;123.489998;Prova 2;12/04/2026-22:16:10;")));
 
     //throws bad cast exception
     ASSERT_THROW(transaction.isEqual(User()),std::bad_cast);
@@ -68,9 +68,9 @@ TEST_F(TransactionFixture, ComparisonMethods) {
     ASSERT_TRUE(transaction.isEqual(transaction.toString()));
 
     //users are not equal
-    ASSERT_FALSE(transaction.isEqual("EGPLbEI0BBvC4Qi4;K7dOYRf4;5xRqvIl4;123.489998;Prova 2;12/02/2026-22:16:10;"));
+    ASSERT_FALSE(transaction.isEqual("EGPLbEI0BBvC4Qi4;K7dOYRf4;5xRqvIl4;123.489998;Prova 2;12/03/2026-22:16:10;"));
 
     //everything correct except for final invalid argument
-    ASSERT_THROW(transaction.isEqual("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid argument;5367.930176;Prova 3;03/02/2026-01:36:28"),std::invalid_argument);
+    ASSERT_THROW(transaction.isEqual("N208QcjYdCI73GiS;3hJOyC9M;x3DJrs1j;invalid argument;5367.930176;Prova 3;03/09/2026-01:36:28"),std::invalid_argument);
 
 }

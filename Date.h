@@ -5,6 +5,7 @@
 #ifndef TRANSAZIONIFINANZIARIE_DATE_H
 #define TRANSAZIONIFINANZIARIE_DATE_H
 #include <ctime>
+#include <ostream>
 #include <string>
 
 //Defining the format for the date string
@@ -16,7 +17,10 @@
 
 class Date {
 public:
+    //base constructor
     Date();
+
+    //load from string constructor
     explicit Date(const std::string& date);
 
     //getters
@@ -29,7 +33,14 @@ public:
 
     [[nodiscard]] std::string toString() const;
 
-    bool isLeapYear() const;
+    static bool isLeap(int year) ;
+
+    static bool isValidDate(const std::tm& tm) ;
+
+    friend bool operator==(const Date &lhs, const Date &rhs);
+
+    friend bool operator!=(const Date &lhs, const Date &rhs);
+
 
 private:
     std::tm date;

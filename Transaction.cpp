@@ -11,7 +11,7 @@
 // the level of the caller of the constructor
 Transaction::Transaction(const std::string &line) {
     if (!Transaction::loadFromString(line))
-        throw std::invalid_argument("CheckingAccount::loadFromString() failed");
+        throw std::invalid_argument("Transaction::loadFromString() failed");
 }
 
 Transaction::Transaction(CheckingAccount &sender, CheckingAccount &receiver, const float amount,
@@ -86,9 +86,10 @@ bool Transaction::isEqual(const IFileConfig &obj) const {
     const auto transaction = dynamic_cast<const Transaction&>(obj);
 
     //IDs could be equal since random function assigning ids is not perfect
-    return idTransaction == transaction.idTransaction ||
-        (idSenderAccount == transaction.idSenderAccount &&
-            idReceiverAccount == transaction.idReceiverAccount);
+    return idTransaction == transaction.idTransaction &&
+            idSenderAccount == transaction.idSenderAccount &&
+            idReceiverAccount == transaction.idReceiverAccount &&
+            date == transaction.date && amount == transaction.amount;
 }
 
 bool Transaction::isEqual(const std::string &line) const {

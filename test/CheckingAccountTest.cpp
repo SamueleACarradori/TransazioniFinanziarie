@@ -16,6 +16,7 @@ protected:
 };
 
 TEST_F(CheckingAccountFixture, ConstructorCall) {
+
     //correctly construct obj
     ASSERT_NO_THROW(CheckingAccount("3hJOyC9M;XQp6WAW2;190.29;"));
 
@@ -27,16 +28,17 @@ TEST_F(CheckingAccountFixture, ConstructorCall) {
 }
 
 TEST_F(CheckingAccountFixture, BalanceManaging) {
+
     //correctly add to balance
     ASSERT_NO_THROW(account.addBalance(12));
 
-    //number must be positive
+    //number is not positive
     ASSERT_THROW(account.addBalance(-3),std::invalid_argument);
 
     //correctly subtract to balance
     ASSERT_NO_THROW(account.subtractBalance(12));
 
-    //number must be positive
+    //number is not positive
     ASSERT_THROW(account.subtractBalance(-3),std::invalid_argument);
 }
 
@@ -54,21 +56,24 @@ TEST_F(CheckingAccountFixture, LoadFromString) {
 }
 
 TEST_F(CheckingAccountFixture, ComparisonMethods) {
-    //users are equal
+
+    //correctly spots that accounts are equal
     ASSERT_TRUE(account.isEqual(account));
 
     //users are not equal
     ASSERT_FALSE(account.isEqual(CheckingAccount("3hJOAA9M;XQp601W2;190.29;")));
 
-    //throws bad cast exception
+    //checking account cannot be equal to transaction or user
     ASSERT_THROW(account.isEqual(Transaction()),std::bad_cast);
 
-    //users are equal
+    //account is equal to string account
     ASSERT_TRUE(account.isEqual(account.toString()));
 
-    //users are not equal
+    //accounts are not equal
     ASSERT_FALSE(account.isEqual("3hJOAA9M;XQp601W2;190.29;"));
 
     //everything correct except for final invalid argument
     ASSERT_THROW(account.isEqual("3hJOAA9M;XQp601W2;190.29;invalid argument;"),std::invalid_argument);
+
+    //the == and != operators are not tested since it just uses isEqual()
 }

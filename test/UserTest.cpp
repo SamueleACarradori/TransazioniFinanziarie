@@ -24,10 +24,10 @@ protected:
 
 TEST_F(UserFixture, AccountManagment) {
 
-    //adds an account requesting only starting income
+    //correctly adds an account with starting balance
     ASSERT_NO_THROW(user.addAccount(990.98));
 
-    //adds account by string
+    //correctly adds account by string
     ASSERT_NO_THROW(user.addAccount("3hJOyC9M;"+user.getId()+";110.23;","3hJOyC9M"));
 
     // account already exists
@@ -36,14 +36,14 @@ TEST_F(UserFixture, AccountManagment) {
     // account does not match user
     ASSERT_THROW(user.addAccount(CheckingAccount()),std::invalid_argument);
 
-    //argument is invalid
+    //account string is invalid
     ASSERT_THROW(user.addAccount("3hJOyC9M;"+user.getId()+";invalid value;11290.230469;","3hJOyC9M"),std::invalid_argument);
 }
 
 TEST_F(UserFixture, AccountBalanceManagement) {
     //testing add account balance
 
-    //correctly adds
+    //correctly adds to balance
     ASSERT_TRUE(user.addAccountBalance(first.getAccountId(),14.32));
 
     //Invalid account id
@@ -52,7 +52,7 @@ TEST_F(UserFixture, AccountBalanceManagement) {
     //Invalid amount (less than 0)
     ASSERT_FALSE(user.addAccountBalance(first.getAccountId(),0));
 
-    //correctly subtracts
+    //correctly subtracts to balance
     ASSERT_TRUE(user.subtractAccountBalance(first.getAccountId(),14.32));
 
     //Invalid account id
@@ -64,13 +64,13 @@ TEST_F(UserFixture, AccountBalanceManagement) {
 
 TEST_F(UserFixture, AccountDeletion) {
 
-    //delete by id
+    //correctly delete account by id
     ASSERT_TRUE(user.deleteAccount(first.getAccountId()));
 
-    //delete by account
+    //correctly delete account by account
     ASSERT_TRUE(user.deleteAccount(second));
 
-    //try invalid value
+    //try invalid account
     ASSERT_FALSE(user.deleteAccount("invalid value"));
 
     //try to delete member already deleted
@@ -78,11 +78,12 @@ TEST_F(UserFixture, AccountDeletion) {
 }
 
 TEST_F(UserFixture, LoadFromString) {
-    //standard use of function
+
+    //correctly load user from string
     ASSERT_TRUE(user.loadFromString("XQp6WAW2;Franco;"));
 
     //too many arguments
-    ASSERT_FALSE(user.loadFromString("XQp6WAW2;Franco;invalid argument;"));
+    ASSERT_FALSE(user.loadFromString("XQp6WAW2;Franco;additionalargument;"));
 
     //ID has 9 char instead of standard length of 8
     ASSERT_FALSE(user.loadFromString("XQp6WAW2P;Franco;"));
@@ -90,16 +91,17 @@ TEST_F(UserFixture, LoadFromString) {
 
 
 TEST_F(UserFixture, ComparisonMethods) {
-    //users are equal
+
+    //correctly spots that users are equal
     ASSERT_TRUE(user.isEqual(user));
 
     //users are not equal
     ASSERT_FALSE(user.isEqual(User("Goku")));
 
-    //throws bad cast exception
+    //user cannot be compared to checkingaccount
     ASSERT_THROW(user.isEqual(CheckingAccount()),std::bad_cast);
 
-    //users are equal
+    //correctly spots that user to string is equal
     ASSERT_TRUE(user.isEqual(user.toString()));
 
     //users are not equal
