@@ -39,7 +39,10 @@ Date::Date(const std::string& date) {
     tm.tm_isdst = 0; // Not daylight saving
 
     // !!!THE ORDER IS VERY IMPORTANT IN THIS CALL !!!
-    // also check if parsing was successful and if date is actually ok
+    // since mktime() alters the content of the struct
+    // if the values inside are not correct (like wrong dates)
+    // it is imperative to first check with the isValidFunction()
+    // also check if parsing was successful
     if (ss.fail() || !Date::isValidDate(tm) || std::mktime(&tm) == -1 ) {
         throw std::invalid_argument("Invalid date '" + date + "'");
     }
